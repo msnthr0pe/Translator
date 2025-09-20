@@ -22,7 +22,7 @@
             android:layout_weight="1"
             android:layout_gravity="center"
             android:background="@android:color/transparent"
-            android:text="@string/favourites"
+            android:text="@string/favorites"
             android:textStyle="bold"/>
 
         <ImageView

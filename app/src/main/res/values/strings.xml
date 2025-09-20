@@ -10,6 +10,7 @@
     <string name="rus">Русский</string>
     <string name="clear_history">Очистить историю</string>
     <string name="query_history">История переводов:</string>
-    <string name="favourites">Избранное</string>
-    <string name="clear_favourites">Очистить избранное</string>
+    <string name="favorites">Избранное</string>
+    <string name="clear_favorites">Очистить избранное</string>
+    <string name="no_favorites">Нет избранных \nпереводов</string>
 </resources>

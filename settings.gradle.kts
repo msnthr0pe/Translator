@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "Translator"
 include(":app")
- 
+include(":data_layer")
+include(":domain_layer")

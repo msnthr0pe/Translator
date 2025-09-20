@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/translateFragment">
+
+    <fragment
+        android:id="@+id/translateFragment"
+        android:name="com.translator.TranslateFragment"
+        android:label="Главный экран"
+        tools:layout="@layout/fragment_translate">
+        <action
+            android:id="@+id/action_translate_to_favorites"
+            app:destination="@id/favoritesFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.translator.FavouritesFragment"
+        android:label="Избранное"
+        tools:layout="@layout/fragment_favourites">
+        <action
+            android:id="@+id/action_favorites_to_translate"
+            app:destination="@id/translateFragment" />
+    </fragment>
+
+</navigation>

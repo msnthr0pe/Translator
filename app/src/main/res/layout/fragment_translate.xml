@@ -91,6 +91,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_marginBottom="@dimen/default_margin"
             app:cardCornerRadius="@dimen/small_corner_radius"
             app:cardElevation="6dp"
@@ -105,8 +106,9 @@
 
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_gravity="center"
                     android:hint="@string/translation" />
 
                 <ImageView
@@ -131,7 +133,7 @@
                 android:id="@+id/history_placeholder"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:layout_marginTop="@dimen/small_margin"
                 app:cardCornerRadius="@dimen/default_corner_radius"
                 app:cardElevation="0dp"
@@ -148,7 +150,7 @@
                 android:id="@+id/recycler_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:orientation="vertical">
 
                 <androidx.recyclerview.widget.RecyclerView
