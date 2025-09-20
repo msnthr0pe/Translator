@@ -11,4 +11,5 @@
     <string name="clear_history">Очистить историю</string>
     <string name="query_history">История переводов:</string>
     <string name="favourites">Избранное</string>
+    <string name="clear_favourites">Очистить избранное</string>
 </resources>
