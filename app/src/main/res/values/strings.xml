@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Translator</string>
+    <string name="enter_query">Введите запрос</string>
+    <string name="translate">Перевести</string>
+    <string name="title">I translate</string>
+    <string name="empty_history">История пуста</string>
+    <string name="default_query">default query</string>
+    <string name="translation">Перевод</string>
+    <string name="eng">Английский</string>
+    <string name="rus">Русский</string>
+    <string name="clear_history">Очистить историю</string>
+    <string name="query_history">История переводов:</string>
+    <string name="favourites">Избранное</string>
+</resources>
