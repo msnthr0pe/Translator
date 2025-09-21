@@ -14,6 +14,6 @@ buildscript {
     }
     dependencies {
         classpath(libs.com.google.devtools.ksp.gradle.plugin)
-        // Use the latest version that matches your Kotlin version
+        classpath(libs.hilt.android.gradle.plugin)
     }
 }
