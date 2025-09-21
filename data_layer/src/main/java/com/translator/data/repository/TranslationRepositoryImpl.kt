@@ -1,5 +1,6 @@
 package com.translator.data.repository
 
+import com.translator.data.models.ErrorModel
 import com.translator.data.remote.SkyengApi
 import com.translator.domain.models.TranslatedWord
 import com.translator.domain.models.TranslationRequest
@@ -11,8 +12,12 @@ class TranslationRepositoryImpl @Inject constructor(
 ) : TranslationRepository {
     override suspend fun translateWord(translationRequest: TranslationRequest): TranslatedWord {
         val response = skyengApi.searchForWord(translationRequest.word)
-        val result = response.first().meanings.last().translation.text
-        return TranslatedWord(result)
+        //Log.d("TranslatorApp", response.toString())
+        if (response.isNotEmpty()) {
+            val result = response.first().meanings.last().translation.text
+            return TranslatedWord(result)
+        }
+        return TranslatedWord(ErrorModel(" ").error)
     }
 
     override suspend fun addToHistory(translatedWord: TranslatedWord) {
