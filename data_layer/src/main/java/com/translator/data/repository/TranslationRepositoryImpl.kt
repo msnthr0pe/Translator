@@ -1,12 +1,18 @@
 package com.translator.data.repository
 
+import com.translator.data.remote.SkyengApi
 import com.translator.domain.models.TranslatedWord
 import com.translator.domain.models.TranslationRequest
 import com.translator.domain.repository.TranslationRepository
+import javax.inject.Inject
 
-class TranslationRepositoryImpl : TranslationRepository {
+class TranslationRepositoryImpl @Inject constructor(
+    private val skyengApi: SkyengApi
+) : TranslationRepository {
     override suspend fun translateWord(translationRequest: TranslationRequest): TranslatedWord {
-        TODO("Not yet implemented")
+        val response = skyengApi.searchForWord(translationRequest.word)
+        val result = response.first().meanings.last().translation.text
+        return TranslatedWord(result)
     }
 
     override suspend fun addToHistory(translatedWord: TranslatedWord) {

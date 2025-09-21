@@ -1,5 +1,5 @@
 package com.translator.data.models
 
 data class TranslationDTO(
-    val translation: String,
+    val text: String,
 )

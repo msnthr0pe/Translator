@@ -42,10 +42,12 @@ android {
     }
 }
 dependencies {
+    implementation(project(":domain_layer"))
+    implementation(project(":data_layer"))
+
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
 
-    // Views/Fragments Integration
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
 

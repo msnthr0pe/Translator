@@ -1,16 +1,28 @@
 package com.translator
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.translator.data.remote.SkyengApi
+import com.translator.data.repository.TranslationRepositoryImpl
 import com.translator.databinding.FragmentTranslateBinding
+import com.translator.domain.models.TranslatedWord
+import com.translator.domain.models.TranslationRequest
+import com.translator.domain.usecases.TranslateUseCase
 import com.translator.viewmodels.NavigationViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class TranslateFragment : Fragment() {
+    @Inject lateinit var skyengApi: SkyengApi
 
     private var _binding: FragmentTranslateBinding? = null
     private val binding get() = _binding!!
@@ -21,6 +33,14 @@ class TranslateFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         _binding = FragmentTranslateBinding.inflate(inflater, container, false)
+
+        val translateUseCase = TranslateUseCase(TranslationRepositoryImpl(skyengApi))
+
+        lifecycleScope.launch {
+            val response: TranslatedWord = translateUseCase(TranslationRequest("hello"))
+            Log.d("TranslatorLog", response.result)
+        }
+
         return binding.root
     }
 
