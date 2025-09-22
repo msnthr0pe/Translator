@@ -26,6 +26,7 @@
             android:textStyle="bold"/>
 
         <ImageView
+            android:id="@+id/recycler_delete_button"
             android:layout_width="@dimen/icon_size"
             android:layout_height="@dimen/icon_size"
             android:layout_gravity="center"

@@ -10,6 +10,7 @@ import com.translator.domain.usecases.TranslateUseCase
 import com.translator.domain.models.HistoryItem
 import com.translator.domain.usecases.AddToHistoryUseCase
 import com.translator.domain.usecases.ClearHistoryUseCase
+import com.translator.domain.usecases.RemoveFromHistoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,6 +20,7 @@ class TranslationViewModel @Inject constructor(
     private val translateUseCase: TranslateUseCase,
     private val addToHistoryUseCase: AddToHistoryUseCase,
     private val clearHistoryUseCase: ClearHistoryUseCase,
+    private val removeFromHistoryUseCase: RemoveFromHistoryUseCase,
 ): ViewModel() {
 
     private val _editTextContents = MutableLiveData<String>()
@@ -50,6 +52,12 @@ class TranslationViewModel @Inject constructor(
     fun clearHistory() {
         viewModelScope.launch {
             _historyItems.value = clearHistoryUseCase()
+        }
+    }
+
+    fun removeHistoryItem(historyItem: HistoryItem) {
+        viewModelScope.launch {
+            _historyItems.value = removeFromHistoryUseCase(historyItem)
         }
     }
 }

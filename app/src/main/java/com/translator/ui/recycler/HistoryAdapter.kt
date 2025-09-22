@@ -3,6 +3,7 @@ package com.translator.ui.recycler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -20,7 +21,7 @@ object HistoryDiffCallback : DiffUtil.ItemCallback<HistoryItem>() {
     }
 }
 
-class HistoryAdapter :
+class HistoryAdapter(private val onDeletePressed: (HistoryItem) -> Unit) :
     ListAdapter<HistoryItem, HistoryAdapter.HistoryViewHolder>(HistoryDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
@@ -35,10 +36,14 @@ class HistoryAdapter :
     }
 
     inner class HistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val historyText: TextView = itemView.findViewById(R.id.recycler_translation)
+        private val historyText: TextView by lazy { itemView.findViewById(R.id.recycler_translation) }
+        private val clearBtn: ImageView by lazy { itemView.findViewById(R.id.recycler_delete_button) }
 
         fun bind(item: HistoryItem) {
             historyText.text = item.historyItem
+            clearBtn.setOnClickListener {
+                onDeletePressed(item)
+            }
         }
     }
 }
