@@ -1,22 +1,18 @@
 package com.translator.data.repository
 
-import com.translator.data.models.ErrorModel
 import com.translator.data.remote.SkyengApi
 import com.translator.domain.models.TranslatedWord
 import com.translator.domain.models.TranslationRequest
+import com.translator.domain.models.translationmodels.ResponseDTO
 import com.translator.domain.repository.TranslationRepository
 import javax.inject.Inject
 
 class TranslationRepositoryImpl @Inject constructor(
     private val skyengApi: SkyengApi
 ) : TranslationRepository {
-    override suspend fun translateWord(translationRequest: TranslationRequest): TranslatedWord {
+    override suspend fun getWordTranslation(translationRequest: TranslationRequest): List<ResponseDTO> {
         val response = skyengApi.searchForWord(translationRequest.word)
-        if (response.isNotEmpty()) {
-            val result = response.first().meanings.first().translation.text
-            return TranslatedWord(result)
-        }
-        return TranslatedWord(ErrorModel(" ").error)
+        return response
     }
 
     override suspend fun addToFavorites(translatedWord: TranslatedWord) {

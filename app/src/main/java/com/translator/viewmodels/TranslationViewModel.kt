@@ -23,10 +23,10 @@ class TranslationViewModel @Inject constructor(
     private val removeFromHistoryUseCase: RemoveFromHistoryUseCase,
 ): ViewModel() {
 
-    private val _editTextContents = MutableLiveData<String>()
+    private val _editTextContents = MutableLiveData("")
     val editTextContents: LiveData<String> get() = _editTextContents
 
-    private val _translationResult = MutableLiveData<String>()
+    private val _translationResult = MutableLiveData("")
     val translationResult: LiveData<String> get() = _translationResult
 
     private val _historyItems = MutableLiveData<List<HistoryItem>>(emptyList())

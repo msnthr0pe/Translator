@@ -7,7 +7,13 @@ import com.translator.domain.repository.HistoryRepository
 class AddToHistoryUseCase(
     private val repository: HistoryRepository
 ) {
+    private var nextHistoryItemID: Int = 0
+
     suspend operator fun invoke(translation: CompleteTranslation): List<HistoryItem> {
-        return repository.addHistoryItem(translation)
+
+        val item = HistoryItem(nextHistoryItemID++,
+            "${translation.originalWord} -> ${translation.translatedWord}")
+
+        return repository.addHistoryItem(item)
     }
 }

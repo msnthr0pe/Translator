@@ -1,6 +1,6 @@
 package com.translator.data.remote
 
-import com.translator.data.models.ResponseDTO
+import com.translator.domain.models.translationmodels.ResponseDTO
 import retrofit2.http.GET
 import retrofit2.http.Query
 
