@@ -11,14 +11,14 @@ class HistoryRepositoryRoomImpl @Inject constructor(
     override suspend fun addHistoryItem(historyItem: HistoryItem): List<HistoryItem> {
         dao.addHistoryItem(
             HistoryEntity(
-                description = historyItem.contents
+                contents = historyItem.contents
             )
         )
         return getHistory()
     }
 
     override suspend fun getHistory(): List<HistoryItem> {
-        return dao.getHistory().map { HistoryItem(it.id, it.description) }
+        return dao.getHistory().map { HistoryItem(it.id, it.contents) }
     }
 
     override suspend fun removeFromHistory(item: HistoryItem): List<HistoryItem> {

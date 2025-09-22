@@ -51,7 +51,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:layout_marginBottom="@dimen/small_margin"
-                tools:listitem="@layout/item_favourites"/>
+                tools:listitem="@layout/item_history"/>
 
             <Button
                 android:layout_width="match_parent"
