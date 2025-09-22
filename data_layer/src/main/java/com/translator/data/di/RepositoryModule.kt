@@ -1,7 +1,9 @@
 package com.translator.data.di
 
 import com.translator.data.remote.SkyengApi
+import com.translator.data.repository.HistoryRepositoryImpl
 import com.translator.data.repository.TranslationRepositoryImpl
+import com.translator.domain.repository.HistoryRepository
 import com.translator.domain.repository.TranslationRepository
 import dagger.Module
 import dagger.Provides
@@ -18,4 +20,8 @@ object RepositoryModule {
     fun provideTranslationRepository(api: SkyengApi): TranslationRepository =
         TranslationRepositoryImpl(api)
 
+    @Provides
+    @Singleton
+    fun provideHistoryRepository(): HistoryRepository =
+        HistoryRepositoryImpl()
 }

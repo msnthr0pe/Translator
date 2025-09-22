@@ -5,4 +5,5 @@
     <dimen name="default_text_size">22sp</dimen>
     <dimen name="default_corner_radius">26dp</dimen>
     <dimen name="small_corner_radius">16dp</dimen>
+    <dimen name="icon_size">24dp</dimen>
 </resources>

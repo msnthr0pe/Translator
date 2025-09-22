@@ -159,6 +159,7 @@
                 tools:listitem="@layout/item_history"/>
 
             <Button
+                android:id="@+id/clear_history_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/clear_history"/>

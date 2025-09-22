@@ -12,28 +12,11 @@ class TranslationRepositoryImpl @Inject constructor(
 ) : TranslationRepository {
     override suspend fun translateWord(translationRequest: TranslationRequest): TranslatedWord {
         val response = skyengApi.searchForWord(translationRequest.word)
-        //Log.d("TranslatorApp", response.toString())
         if (response.isNotEmpty()) {
-            val result = response.first().meanings.last().translation.text
+            val result = response.first().meanings.first().translation.text
             return TranslatedWord(result)
         }
         return TranslatedWord(ErrorModel(" ").error)
-    }
-
-    override suspend fun addToHistory(translatedWord: TranslatedWord) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun getHistory(): List<TranslatedWord> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun removeFromHistory(translatedWord: TranslatedWord) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun clearHistory() {
-        TODO("Not yet implemented")
     }
 
     override suspend fun addToFavorites(translatedWord: TranslatedWord) {
