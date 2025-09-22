@@ -28,6 +28,10 @@ class TranslationRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
+    override suspend fun removeFromHistory(translatedWord: TranslatedWord) {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun clearHistory() {
         TODO("Not yet implemented")
     }

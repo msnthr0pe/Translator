@@ -7,7 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.translator.databinding.FragmentTranslateBinding
+import com.translator.models.HistoryItem
+import com.translator.ui.recycler.HistoryAdapter
 import com.translator.viewmodels.TranslationViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,16 +25,17 @@ class TranslateFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         _binding = FragmentTranslateBinding.inflate(inflater, container, false)
-
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupObservers()
+        setupInteractions()
+        setupHistoryRecycler()
+    }
 
-
-
+    private fun setupObservers() {
         translateViewModel.translationResult.observe(viewLifecycleOwner) {
             binding.translationResultLayout.visibility = View.VISIBLE
             binding.translationResult.text = it
@@ -44,7 +48,9 @@ class TranslateFragment : Fragment() {
                 }
             }
         }
+    }
 
+    private fun setupInteractions() {
         binding.translationQuery.doOnTextChanged { text, _, _, _ ->
             translateViewModel.updateEditTextContents(text.toString())
         }
@@ -52,5 +58,28 @@ class TranslateFragment : Fragment() {
         binding.transalteButton.setOnClickListener {
             translateViewModel.translate(translateViewModel.editTextContents.value.toString())
         }
+    }
+
+    private fun setupHistoryRecycler() {
+        val mockItems = listOf(
+            HistoryItem("Hello"),
+            HistoryItem("World"),
+            HistoryItem("Hello"),
+            HistoryItem("World"),
+            HistoryItem("Hello"),
+            HistoryItem("World"),
+            HistoryItem("Hello"),
+            HistoryItem("World"),
+            HistoryItem("Hello"),
+            HistoryItem("World"),
+            HistoryItem("Hello"),
+            HistoryItem("World"),
+        )
+        val adapter = HistoryAdapter(mockItems)
+        binding.historyRecycler.layoutManager = LinearLayoutManager(activity)
+        binding.historyRecycler.adapter = adapter
+        binding.recyclerLayout.visibility = View.VISIBLE
+        binding.historyPlaceholder.visibility = View.GONE
+
     }
 }

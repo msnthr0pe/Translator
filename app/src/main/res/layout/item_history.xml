@@ -16,7 +16,7 @@
         android:padding="@dimen/small_margin">
 
         <TextView
-            android:id="@+id/recyclerQuery"
+            android:id="@+id/recycler_translation"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

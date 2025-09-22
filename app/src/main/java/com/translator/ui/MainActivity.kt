@@ -28,12 +28,10 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        // Получаем NavController из NavHostFragment
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
-        // Подключаем bottomNav к navController (без ручного inflate/clear)
         binding.bottomNav.setupWithNavController(navController)
 
     }
