@@ -2,10 +2,10 @@ package com.translator.di
 
 import com.translator.domain.repository.TranslatedItemsRepository
 import com.translator.domain.repository.TranslationRepository
-import com.translator.domain.usecases.AddToHistoryUseCase
-import com.translator.domain.usecases.ClearHistoryUseCase
-import com.translator.domain.usecases.GetHistoryUseCase
-import com.translator.domain.usecases.RemoveFromHistoryUseCase
+import com.translator.domain.usecases.AddToItemsUseCase
+import com.translator.domain.usecases.ClearItemsUseCase
+import com.translator.domain.usecases.GetItemsUseCase
+import com.translator.domain.usecases.RemoveFromItemsUseCase
 import com.translator.domain.usecases.TranslateUseCase
 import dagger.Module
 import dagger.Provides
@@ -25,26 +25,26 @@ object UseCaseModule {
 
     @Provides
     @Singleton
-    fun provideAddToHistoryUseCase(
+    fun provideAddToItemsUseCase(
         repository: TranslatedItemsRepository
-    ): AddToHistoryUseCase = AddToHistoryUseCase(repository)
+    ): AddToItemsUseCase = AddToItemsUseCase(repository)
 
     @Provides
     @Singleton
-    fun provideClearHistoryUseCase(
+    fun provideClearItemsUseCase(
         repository: TranslatedItemsRepository
-    ): ClearHistoryUseCase = ClearHistoryUseCase(repository)
+    ): ClearItemsUseCase = ClearItemsUseCase(repository)
 
     @Provides
     @Singleton
-    fun provideRemoveFromHistoryUseCase(
+    fun provideRemoveFromItemsUseCase(
         repository: TranslatedItemsRepository
-    ): RemoveFromHistoryUseCase = RemoveFromHistoryUseCase(repository)
+    ): RemoveFromItemsUseCase = RemoveFromItemsUseCase(repository)
 
     @Provides
     @Singleton
     fun provideGetHistoryUseCase(
         repository: TranslatedItemsRepository
-    ): GetHistoryUseCase = GetHistoryUseCase(repository)
+    ): GetItemsUseCase = GetItemsUseCase(repository)
 
 }

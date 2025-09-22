@@ -5,7 +5,7 @@ import com.translator.domain.models.HistoryItem
 import com.translator.domain.models.Item
 import com.translator.domain.repository.TranslatedItemsRepository
 
-class AddToHistoryUseCase(
+class AddToItemsUseCase(
     private val repository: TranslatedItemsRepository
 ) {
 

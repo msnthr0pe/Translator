@@ -1,13 +1,12 @@
 package com.translator.domain.usecases
 
-import com.translator.domain.models.HistoryItem
 import com.translator.domain.models.Item
 import com.translator.domain.repository.TranslatedItemsRepository
 
-class RemoveFromHistoryUseCase(
+class GetItemsUseCase(
     private val repository: TranslatedItemsRepository
-){
-    suspend operator fun invoke(item: HistoryItem): List<Item> {
-        return repository.removeFromItems(item)
+) {
+    suspend operator fun invoke(): List<Item> {
+        return repository.getItems()
     }
 }

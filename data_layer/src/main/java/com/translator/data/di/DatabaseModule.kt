@@ -2,7 +2,7 @@ package com.translator.data.di
 
 import android.content.Context
 import androidx.room.Room
-import com.translator.data.local.HistoryDao
+import com.translator.data.local.ItemDao
 import com.translator.data.local.TranslationDatabase
 import dagger.Module
 import dagger.Provides
@@ -23,5 +23,5 @@ object DatabaseModule {
     }
 
     @Provides
-    fun provideHistoryDao(db: TranslationDatabase): HistoryDao = db.historyDao()
+    fun provideHistoryDao(db: TranslationDatabase): ItemDao = db.itemDao()
 }

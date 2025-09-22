@@ -3,8 +3,8 @@ package com.translator.data.local
 import androidx.room.Database
 import androidx.room.RoomDatabase
 
-@Database(entities = [HistoryEntity::class], version = 2)
+@Database(entities = [HistoryEntity::class, FavoritesEntity::class], version = 2)
 abstract class TranslationDatabase : RoomDatabase() {
-    abstract fun historyDao(): HistoryDao
+    abstract fun itemDao(): ItemDao
 
 }
