@@ -4,6 +4,7 @@ import com.translator.domain.repository.HistoryRepository
 import com.translator.domain.repository.TranslationRepository
 import com.translator.domain.usecases.AddToHistoryUseCase
 import com.translator.domain.usecases.ClearHistoryUseCase
+import com.translator.domain.usecases.GetHistoryUseCase
 import com.translator.domain.usecases.RemoveFromHistoryUseCase
 import com.translator.domain.usecases.TranslateUseCase
 import dagger.Module
@@ -39,5 +40,11 @@ object UseCaseModule {
     fun provideRemoveFromHistoryUseCase(
         repository: HistoryRepository
     ): RemoveFromHistoryUseCase = RemoveFromHistoryUseCase(repository)
+
+    @Provides
+    @Singleton
+    fun provideGetHistoryUseCase(
+        repository: HistoryRepository
+    ): GetHistoryUseCase = GetHistoryUseCase(repository)
 
 }

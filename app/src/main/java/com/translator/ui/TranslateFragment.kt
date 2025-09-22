@@ -32,6 +32,11 @@ class TranslateFragment : Fragment() {
         setupObservers()
         setupInteractions()
         setupHistoryRecycler()
+        loadHistory()
+    }
+
+    private fun loadHistory() {
+        translationViewModel.loadHistory()
     }
 
     private fun setupObservers() {
@@ -73,19 +78,26 @@ class TranslateFragment : Fragment() {
         translationViewModel.historyItems.observe(viewLifecycleOwner) { list ->
             adapter.submitList(list)
             if (list.isEmpty()) {
-                with(binding) {
-                    recyclerLayout.visibility = View.GONE
-                    historyPlaceholder.visibility = View.VISIBLE
-                }
+                setHistoryVisibility(false)
             } else {
-                with(binding) {
-                    recyclerLayout.visibility = View.VISIBLE
-                    historyPlaceholder.visibility = View.GONE
-                }
+                setHistoryVisibility(true)
             }
         }
         binding.clearHistoryButton.setOnClickListener {
             translationViewModel.clearHistory()
+        }
+    }
+
+    private fun setHistoryVisibility(setVisible: Boolean) {
+        with(binding) {
+            if (setVisible){
+                recyclerLayout.visibility = View.VISIBLE
+                historyPlaceholder.visibility = View.GONE
+            } else {
+                recyclerLayout.visibility = View.GONE
+                historyPlaceholder.visibility = View.VISIBLE
+            }
+
         }
     }
 }

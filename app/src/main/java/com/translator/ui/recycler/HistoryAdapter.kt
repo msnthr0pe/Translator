@@ -40,7 +40,7 @@ class HistoryAdapter(private val onDeletePressed: (HistoryItem) -> Unit) :
         private val clearBtn: ImageView by lazy { itemView.findViewById(R.id.recycler_delete_button) }
 
         fun bind(item: HistoryItem) {
-            historyText.text = item.historyItem
+            historyText.text = item.contents
             clearBtn.setOnClickListener {
                 onDeletePressed(item)
             }
