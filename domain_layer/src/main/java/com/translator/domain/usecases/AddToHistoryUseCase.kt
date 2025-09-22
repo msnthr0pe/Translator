@@ -2,16 +2,17 @@ package com.translator.domain.usecases
 
 import com.translator.domain.models.CompleteTranslation
 import com.translator.domain.models.HistoryItem
-import com.translator.domain.repository.HistoryRepository
+import com.translator.domain.models.Item
+import com.translator.domain.repository.TranslatedItemsRepository
 
 class AddToHistoryUseCase(
-    private val repository: HistoryRepository
+    private val repository: TranslatedItemsRepository
 ) {
 
-    suspend operator fun invoke(translation: CompleteTranslation): List<HistoryItem> {
+    suspend operator fun invoke(translation: CompleteTranslation): List<Item> {
 
         val item = HistoryItem(contents = "${translation.originalWord} -> ${translation.translatedWord}")
 
-        return repository.addHistoryItem(item)
+        return repository.addItem(item)
     }
 }

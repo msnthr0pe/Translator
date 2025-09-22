@@ -9,6 +9,7 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.translator.databinding.FragmentTranslateBinding
+import com.translator.domain.models.HistoryItem
 import com.translator.ui.recycler.HistoryAdapter
 import com.translator.viewmodels.TranslationViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -76,7 +77,7 @@ class TranslateFragment : Fragment() {
         }
 
         translationViewModel.historyItems.observe(viewLifecycleOwner) { list ->
-            adapter.submitList(list)
+            adapter.submitList(list.map { HistoryItem(it.id, it.contents) })
             if (list.isEmpty()) {
                 setHistoryVisibility(false)
             } else {

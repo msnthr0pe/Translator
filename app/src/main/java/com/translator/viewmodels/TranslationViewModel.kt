@@ -8,6 +8,7 @@ import com.translator.domain.models.CompleteTranslation
 import com.translator.domain.models.TranslationRequest
 import com.translator.domain.usecases.TranslateUseCase
 import com.translator.domain.models.HistoryItem
+import com.translator.domain.models.Item
 import com.translator.domain.usecases.AddToHistoryUseCase
 import com.translator.domain.usecases.ClearHistoryUseCase
 import com.translator.domain.usecases.GetHistoryUseCase
@@ -31,8 +32,8 @@ class TranslationViewModel @Inject constructor(
     private val _translationResult = MutableLiveData("")
     val translationResult: LiveData<String> get() = _translationResult
 
-    private val _historyItems = MutableLiveData<List<HistoryItem>>(emptyList())
-    val historyItems: LiveData<List<HistoryItem>> get() = _historyItems
+    private val _historyItems = MutableLiveData<List<Item>>(emptyList<HistoryItem>())
+    val historyItems: LiveData<List<Item>> get() = _historyItems
 
     fun loadHistory() {
         viewModelScope.launch {
@@ -48,7 +49,7 @@ class TranslationViewModel @Inject constructor(
 
                 _historyItems.value = addToHistoryUseCase(
                     CompleteTranslation(word,
-                    _translationResult.value.toString())
+                        _translationResult.value.toString())
                 )
             }
         }

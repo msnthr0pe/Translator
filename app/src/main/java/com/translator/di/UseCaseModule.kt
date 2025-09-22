@@ -1,6 +1,6 @@
 package com.translator.di
 
-import com.translator.domain.repository.HistoryRepository
+import com.translator.domain.repository.TranslatedItemsRepository
 import com.translator.domain.repository.TranslationRepository
 import com.translator.domain.usecases.AddToHistoryUseCase
 import com.translator.domain.usecases.ClearHistoryUseCase
@@ -26,25 +26,25 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideAddToHistoryUseCase(
-        repository: HistoryRepository
+        repository: TranslatedItemsRepository
     ): AddToHistoryUseCase = AddToHistoryUseCase(repository)
 
     @Provides
     @Singleton
     fun provideClearHistoryUseCase(
-        repository: HistoryRepository
+        repository: TranslatedItemsRepository
     ): ClearHistoryUseCase = ClearHistoryUseCase(repository)
 
     @Provides
     @Singleton
     fun provideRemoveFromHistoryUseCase(
-        repository: HistoryRepository
+        repository: TranslatedItemsRepository
     ): RemoveFromHistoryUseCase = RemoveFromHistoryUseCase(repository)
 
     @Provides
     @Singleton
     fun provideGetHistoryUseCase(
-        repository: HistoryRepository
+        repository: TranslatedItemsRepository
     ): GetHistoryUseCase = GetHistoryUseCase(repository)
 
 }

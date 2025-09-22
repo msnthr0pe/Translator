@@ -27,7 +27,7 @@ class HistoryAdapter(private val onDeletePressed: (HistoryItem) -> Unit) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
         return HistoryViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_history, parent, false)
+                .inflate(R.layout.item_translation, parent, false)
         )
     }
 
