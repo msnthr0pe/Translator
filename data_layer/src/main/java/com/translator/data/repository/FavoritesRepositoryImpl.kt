@@ -14,18 +14,21 @@ class FavoritesRepositoryImpl @Inject constructor(
     override suspend fun addItem(item: Item): List<Item> {
         dao.addFavoritesItem(
             FavoritesEntity(
-                contents = item.contents
+                originalWord = item.originalWord,
+                translatedWord = item.translatedWord
             )
         )
         return getItems()
     }
 
     override suspend fun getItems(): List<Item> {
-        return dao.getFavorites().map { FavoritesItem(it.id, it.contents) }
+        return dao.getFavorites().map { FavoritesItem(it.id, it.originalWord,
+            it.translatedWord) }
     }
 
     override suspend fun removeFromItems(item: Item): List<Item> {
-        dao.removeFromFavorites(FavoritesEntity(item.id, item.contents))
+        dao.removeFromFavorites(FavoritesEntity(item.id, item.originalWord,
+            item.translatedWord))
         return getItems()
     }
 

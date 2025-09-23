@@ -87,7 +87,7 @@ class TranslateFragment : Fragment() {
         }
 
         historyItemsViewModel.historyItems.observe(viewLifecycleOwner) { list ->
-            adapter.submitList(list.map { HistoryItem(it.id, it.contents) })
+            adapter.submitList(list.map { HistoryItem(it.id, it.originalWord, it.translatedWord) })
             if (list.isEmpty()) {
                 setHistoryVisibility(false)
             } else {

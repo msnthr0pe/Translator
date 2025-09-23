@@ -6,5 +6,6 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "favorites")
 data class FavoritesEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val contents: String
+    val originalWord: String,
+    val translatedWord: String
 )

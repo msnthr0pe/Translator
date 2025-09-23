@@ -37,12 +37,14 @@ class HistoryAdapter(private val onDeletePressed: (HistoryItem) -> Unit,
     }
 
     inner class HistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val historyText: TextView by lazy { itemView.findViewById(R.id.recycler_translation) }
+        private val historyOriginalWord: TextView by lazy { itemView.findViewById(R.id.recycler_history_original_word) }
+        private val historyTranslatedWord: TextView by lazy { itemView.findViewById(R.id.recycler_history_translated_word) }
         private val clearBtn: ImageView by lazy { itemView.findViewById(R.id.recycler_delete_button) }
         private val toFavorites: ImageView by lazy { itemView.findViewById(R.id.translation_to_favorites_button) }
 
         fun bind(item: HistoryItem) {
-            historyText.text = item.contents
+            historyOriginalWord.text = item.originalWord
+            historyTranslatedWord.text = item.translatedWord
             clearBtn.setOnClickListener {
                 onDeletePressed(item)
             }

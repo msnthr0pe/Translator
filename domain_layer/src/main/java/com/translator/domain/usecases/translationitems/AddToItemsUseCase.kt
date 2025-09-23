@@ -12,9 +12,10 @@ class AddToItemsUseCase(
 
     suspend operator fun invoke(translation: CompleteTranslation,  storageType: StorageType): List<Item> {
 
-        val item = "${translation.originalWord} -> ${translation.translatedWord}"
-
         val repository = repositories[storageType] ?: throw IllegalArgumentException("Unknown storage type: $storageType")
-        return repository.addItem(ItemTransfer(contents = item))
+        return repository.addItem(ItemTransfer(
+            originalWord = translation.originalWord,
+            translatedWord = translation.translatedWord)
+        )
     }
 }

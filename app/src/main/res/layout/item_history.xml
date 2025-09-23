@@ -13,17 +13,46 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="@color/dark_gray"
-        android:padding="@dimen/small_margin">
+        android:paddingVertical="@dimen/small_margin"
+        android:paddingHorizontal="@dimen/default_margin">
 
-        <TextView
-            android:id="@+id/recycler_translation"
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_gravity="center"
-            android:background="@android:color/transparent"
-            android:text="@string/translation"
-            android:textStyle="bold"/>
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/recycler_history_original_word"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:layout_marginEnd="@dimen/micro_margin"
+                android:text="@string/word"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:layout_marginEnd="@dimen/micro_margin"
+                android:text="@string/arrow"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/recycler_history_translated_word"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:layout_marginEnd="@dimen/micro_margin"
+                android:text="@string/translation"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
 
         <ImageView
             android:id="@+id/recycler_delete_button"

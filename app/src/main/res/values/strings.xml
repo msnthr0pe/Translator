@@ -13,4 +13,6 @@
     <string name="favorites">Избранное</string>
     <string name="clear_favorites">Очистить избранное</string>
     <string name="no_favorites">Нет избранных \nпереводов</string>
+    <string name="arrow"><![CDATA[->]]></string>
+    <string name="word">Cлово</string>
 </resources>
