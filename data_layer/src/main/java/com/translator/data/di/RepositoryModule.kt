@@ -1,6 +1,6 @@
 package com.translator.data.di
 
-import TranslatedItemsRepositoryRoomImpl
+import com.translator.data.repository.HistoryRepositoryImpl
 import com.translator.data.local.ItemDao
 import com.translator.data.remote.SkyengApi
 import com.translator.data.repository.TranslationRepositoryImpl
@@ -24,5 +24,5 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun provideHistoryRepository(dao: ItemDao): TranslatedItemsRepository =
-        TranslatedItemsRepositoryRoomImpl(dao)
+        HistoryRepositoryImpl(dao)
 }

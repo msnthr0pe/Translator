@@ -1,3 +1,5 @@
+package com.translator.data.repository
+
 import com.translator.data.local.ItemDao
 import com.translator.data.local.HistoryEntity
 import com.translator.domain.models.HistoryItem
@@ -5,7 +7,7 @@ import com.translator.domain.models.Item
 import com.translator.domain.repository.TranslatedItemsRepository
 import javax.inject.Inject
 
-class TranslatedItemsRepositoryRoomImpl @Inject constructor(
+class HistoryRepositoryImpl @Inject constructor(
     private val dao: ItemDao
 ) : TranslatedItemsRepository {
 

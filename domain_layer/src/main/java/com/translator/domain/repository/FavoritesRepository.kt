@@ -1,0 +1,3 @@
+package com.translator.domain.repository
+
+interface FavoritesRepository : TranslatedItemsRepository
