@@ -75,9 +75,12 @@ class TranslateFragment : Fragment() {
     }
 
     private fun setupHistoryRecycler() {
-        val adapter = HistoryAdapter { historyItem ->
+        val adapter = HistoryAdapter ({ historyItem ->
             historyItemsViewModel.removeHistoryItem(historyItem)
-        }
+        },
+            { historyItem ->
+                favoritesItemsViewModel.addToFavorites(historyItem)
+            })
         with (binding) {
             historyRecycler.layoutManager = LinearLayoutManager(activity)
             historyRecycler.adapter = adapter

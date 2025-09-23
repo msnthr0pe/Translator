@@ -21,13 +21,14 @@ object HistoryDiffCallback : DiffUtil.ItemCallback<HistoryItem>() {
     }
 }
 
-class HistoryAdapter(private val onDeletePressed: (HistoryItem) -> Unit) :
+class HistoryAdapter(private val onDeletePressed: (HistoryItem) -> Unit,
+                     private val onAddToFavorites: (HistoryItem) -> Unit) :
     ListAdapter<HistoryItem, HistoryAdapter.HistoryViewHolder>(HistoryDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
         return HistoryViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_translation, parent, false)
+                .inflate(R.layout.item_history, parent, false)
         )
     }
 
@@ -38,11 +39,15 @@ class HistoryAdapter(private val onDeletePressed: (HistoryItem) -> Unit) :
     inner class HistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val historyText: TextView by lazy { itemView.findViewById(R.id.recycler_translation) }
         private val clearBtn: ImageView by lazy { itemView.findViewById(R.id.recycler_delete_button) }
+        private val toFavorites: ImageView by lazy { itemView.findViewById(R.id.translation_to_favorites_button) }
 
         fun bind(item: HistoryItem) {
             historyText.text = item.contents
             clearBtn.setOnClickListener {
                 onDeletePressed(item)
+            }
+            toFavorites.setOnClickListener {
+                onAddToFavorites(item)
             }
         }
     }

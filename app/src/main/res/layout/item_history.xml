@@ -34,6 +34,7 @@
             android:src="@drawable/ic_cancel"/>
 
         <ImageView
+            android:id="@+id/translation_to_favorites_button"
             android:layout_width="@dimen/icon_size"
             android:layout_height="@dimen/icon_size"
             android:layout_gravity="center"
