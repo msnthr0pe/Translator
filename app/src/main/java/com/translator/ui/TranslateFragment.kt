@@ -10,6 +10,7 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.translator.databinding.FragmentTranslateBinding
+import com.translator.domain.models.FavoritesItem
 import com.translator.domain.models.HistoryItem
 import com.translator.ui.recycler.HistoryAdapter
 import com.translator.viewmodels.FavoritesItemsViewModel
@@ -78,8 +79,12 @@ class TranslateFragment : Fragment() {
         val adapter = HistoryAdapter ({ historyItem ->
             historyItemsViewModel.removeHistoryItem(historyItem)
         },
-            { historyItem ->
-                favoritesItemsViewModel.addToFavorites(historyItem)
+            { historyItem, isFavorite ->
+                favoritesItemsViewModel.manageFavorites(FavoritesItem(
+                    originalWord = historyItem.originalWord,
+                    translatedWord = historyItem.translatedWord),
+                    isFavorite)
+                !isFavorite
             })
         with (binding) {
             historyRecycler.layoutManager = LinearLayoutManager(activity)

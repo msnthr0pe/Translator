@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.translator.domain.StorageType
+import com.translator.domain.models.CompleteTranslation
 import com.translator.domain.models.FavoritesItem
-import com.translator.domain.models.HistoryItem
 import com.translator.domain.models.Item
 import com.translator.domain.usecases.translationitems.AddToItemsUseCase
 import com.translator.domain.usecases.translationitems.ClearItemsUseCase
@@ -29,12 +29,19 @@ class FavoritesItemsViewModel @Inject constructor(
     private val storageType: StorageType = StorageType.FAVORITES
 
 
-    fun addToFavorites(historyItem: HistoryItem) {
+    fun manageFavorites(favoritesItem: FavoritesItem, isFavorite: Boolean) {
+        val isFavorite = !isFavorite
 //        viewModelScope.launch {
-//            _favoritesItems.value = addToFavoritesUseCase(
-//                CompleteTranslation(word,
-//                    translation), storageType
-//            )
+//            if (isFavorite) {
+//                _favoritesItems.value = addToFavoritesUseCase(
+//                    CompleteTranslation(
+//                        favoritesItem.originalWord,
+//                        favoritesItem.translatedWord
+//                    ), storageType
+//                )
+//            } else {
+//                removeFavoritesItem(favoritesItem)
+//            }
 //        }
     }
 
@@ -50,7 +57,7 @@ class FavoritesItemsViewModel @Inject constructor(
         }
     }
 
-    fun removeHistoryItem(favoritesItem: FavoritesItem) {
+    fun removeFavoritesItem(favoritesItem: FavoritesItem) {
         viewModelScope.launch {
             _favoritesItems.value = removeFromFavoritesUseCase(favoritesItem, storageType)
         }

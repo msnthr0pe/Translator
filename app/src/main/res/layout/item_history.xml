@@ -13,8 +13,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="@color/dark_gray"
-        android:paddingVertical="@dimen/small_margin"
-        android:paddingHorizontal="@dimen/default_margin">
+        android:paddingStart="@dimen/default_margin"
+        android:paddingEnd="8dp">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -56,16 +56,17 @@
 
         <ImageView
             android:id="@+id/recycler_delete_button"
-            android:layout_width="@dimen/icon_size"
-            android:layout_height="@dimen/icon_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/small_margin"
             android:layout_gravity="center"
-            android:layout_marginEnd="@dimen/small_margin"
             android:src="@drawable/ic_cancel"/>
 
         <ImageView
             android:id="@+id/translation_to_favorites_button"
-            android:layout_width="@dimen/icon_size"
-            android:layout_height="@dimen/icon_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/small_margin"
             android:layout_gravity="center"
             android:src="@drawable/ic_bookmark_outlined"/>
 
