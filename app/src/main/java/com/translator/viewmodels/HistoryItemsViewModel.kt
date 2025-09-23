@@ -38,6 +38,10 @@ class HistoryItemsViewModel @Inject constructor(
         }
     }
 
+    fun updateHistory(list: List<Item>) {
+        _historyItems.value = list
+    }
+
     fun loadHistory() {
         viewModelScope.launch {
             _historyItems.value = getHistoryUseCase(storageType)

@@ -22,7 +22,7 @@ object HistoryDiffCallback : DiffUtil.ItemCallback<HistoryItem>() {
 }
 
 class HistoryAdapter(private val onDeletePressed: (HistoryItem) -> Unit,
-                     private val onAddToFavorites: (HistoryItem, Boolean) -> Boolean) :
+                     private val onAddToFavorites: (HistoryItem, Int) -> Unit) :
     ListAdapter<HistoryItem, HistoryAdapter.HistoryViewHolder>(HistoryDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
@@ -33,7 +33,7 @@ class HistoryAdapter(private val onDeletePressed: (HistoryItem) -> Unit,
     }
 
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), position)
     }
 
     inner class HistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -41,22 +41,23 @@ class HistoryAdapter(private val onDeletePressed: (HistoryItem) -> Unit,
         private val historyTranslatedWord: TextView by lazy { itemView.findViewById(R.id.recycler_history_translated_word) }
         private val clearBtn: ImageView by lazy { itemView.findViewById(R.id.recycler_delete_button) }
         private val toFavoritesBtn: ImageView by lazy { itemView.findViewById(R.id.translation_to_favorites_button) }
-        private var isFavorite: Boolean = false
 
-        fun bind(item: HistoryItem) {
+        fun bind(item: HistoryItem, position: Int) {
             historyOriginalWord.text = item.originalWord
             historyTranslatedWord.text = item.translatedWord
             clearBtn.setOnClickListener {
                 onDeletePressed(item)
             }
+
             toFavoritesBtn.setOnClickListener {
-                isFavorite = onAddToFavorites(item, isFavorite)
-                if (isFavorite) {
-                    toFavoritesBtn.setImageResource(R.drawable.ic_bookmark_filled)
-                } else {
-                    toFavoritesBtn.setImageResource(R.drawable.ic_bookmark_outlined)
-                }
+                onAddToFavorites(item, position)
             }
+
+            toFavoritesBtn.setImageResource(
+                if (item.isFavorite) R.drawable.ic_bookmark_filled
+                else R.drawable.ic_bookmark_outlined
+            )
+
         }
     }
 }
