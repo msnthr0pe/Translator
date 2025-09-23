@@ -1,19 +1,19 @@
 package com.translator.data.repository
 
+import com.translator.data.local.FavoritesEntity
 import com.translator.data.local.ItemDao
-import com.translator.data.local.HistoryEntity
-import com.translator.domain.models.HistoryItem
+import com.translator.domain.models.FavoritesItem
 import com.translator.domain.models.Item
-import com.translator.domain.repository.HistoryRepository
+import com.translator.domain.repository.FavoritesRepository
 import javax.inject.Inject
 
-class HistoryRepositoryImpl @Inject constructor(
-    private val dao: ItemDao
-) : HistoryRepository {
+class FavoritesRepositoryImpl @Inject constructor(
+    private val dao: ItemDao,
+) : FavoritesRepository {
 
     override suspend fun addItem(item: Item): List<Item> {
-        dao.addHistoryItem(
-            HistoryEntity(
+        dao.addFavoritesItem(
+            FavoritesEntity(
                 contents = item.contents
             )
         )
@@ -21,16 +21,16 @@ class HistoryRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getItems(): List<Item> {
-        return dao.getHistory().map { HistoryItem(it.id, it.contents) }
+        return dao.getFavorites().map { FavoritesItem(it.id, it.contents) }
     }
 
     override suspend fun removeFromItems(item: Item): List<Item> {
-        dao.removeFromHistory(HistoryEntity(item.id, item.contents))
+        dao.removeFromFavorites(FavoritesEntity(item.id, item.contents))
         return getItems()
     }
 
     override suspend fun clearItems(): List<Item> {
-        dao.clearHistory()
+        dao.clearFavorites()
         return getItems()
     }
 }

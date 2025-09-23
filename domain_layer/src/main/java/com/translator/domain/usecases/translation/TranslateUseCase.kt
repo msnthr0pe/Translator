@@ -1,4 +1,4 @@
-package com.translator.domain.usecases
+package com.translator.domain.usecases.translation
 
 import com.translator.domain.models.TranslatedWord
 import com.translator.domain.models.TranslationRequest

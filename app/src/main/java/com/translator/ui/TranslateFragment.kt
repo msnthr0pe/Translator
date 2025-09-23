@@ -1,6 +1,6 @@
 package com.translator.ui
 
-import com.translator.viewmodels.ItemsViewModel
+import com.translator.viewmodels.HistoryItemsViewModel
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -20,7 +20,7 @@ class TranslateFragment : Fragment() {
     private var _binding: FragmentTranslateBinding? = null
     private val binding get() = _binding!!
     private val translationViewModel: TranslationViewModel by activityViewModels()
-    private val itemsViewModel: ItemsViewModel by activityViewModels()
+    private val historyItemsViewModel: HistoryItemsViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,7 +39,7 @@ class TranslateFragment : Fragment() {
     }
 
     private fun loadHistory() {
-        itemsViewModel.loadHistory()
+        historyItemsViewModel.loadHistory()
     }
 
     private fun setupObservers() {
@@ -64,7 +64,7 @@ class TranslateFragment : Fragment() {
 
         binding.transalteButton.setOnClickListener {
             translationViewModel.translate(translationViewModel.editTextContents.value.toString()) {
-                itemsViewModel.addToHistory(
+                historyItemsViewModel.addToHistory(
                     translationViewModel.editTextContents.value.orEmpty(),
                     it
                 )
@@ -74,14 +74,14 @@ class TranslateFragment : Fragment() {
 
     private fun setupHistoryRecycler() {
         val adapter = HistoryAdapter { historyItem ->
-            itemsViewModel.removeHistoryItem(historyItem)
+            historyItemsViewModel.removeHistoryItem(historyItem)
         }
         with (binding) {
             historyRecycler.layoutManager = LinearLayoutManager(activity)
             historyRecycler.adapter = adapter
         }
 
-        itemsViewModel.historyItems.observe(viewLifecycleOwner) { list ->
+        historyItemsViewModel.historyItems.observe(viewLifecycleOwner) { list ->
             adapter.submitList(list.map { HistoryItem(it.id, it.contents) })
             if (list.isEmpty()) {
                 setHistoryVisibility(false)
@@ -90,7 +90,7 @@ class TranslateFragment : Fragment() {
             }
         }
         binding.clearHistoryButton.setOnClickListener {
-            itemsViewModel.clearHistory()
+            historyItemsViewModel.clearHistory()
         }
     }
 
