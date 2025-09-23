@@ -2,17 +2,13 @@ package com.translator.domain.usecases.translationitems
 
 import com.translator.domain.StorageType
 import com.translator.domain.models.Item
-import com.translator.domain.repository.FavoritesRepository
-import com.translator.domain.repository.HistoryRepository
+import com.translator.domain.repository.TranslatedItemsRepository
 
 class ClearItemsUseCase(
-    private val historyRepository: HistoryRepository,
-    private val favoritesRepository: FavoritesRepository,
+    private val repositories: Map<StorageType, TranslatedItemsRepository>
     ) {
     suspend operator fun invoke(storageType: StorageType): List<Item> {
-        return when (storageType) {
-            StorageType.History -> historyRepository.clearItems()
-            StorageType.Favorites -> favoritesRepository.clearItems()
-        }
+        val repository = repositories[storageType] ?: throw IllegalArgumentException("Unknown storage type: $storageType")
+        return repository.clearItems()
     }
 }

@@ -1,7 +1,7 @@
 package com.translator.di
 
-import com.translator.domain.repository.FavoritesRepository
-import com.translator.domain.repository.HistoryRepository
+import com.translator.domain.StorageType
+import com.translator.domain.repository.TranslatedItemsRepository
 import com.translator.domain.repository.TranslationRepository
 import com.translator.domain.usecases.translationitems.AddToItemsUseCase
 import com.translator.domain.usecases.translationitems.ClearItemsUseCase
@@ -27,29 +27,25 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideAddToItemsUseCase(
-        historyRepository: HistoryRepository,
-        favoritesRepository: FavoritesRepository,
-        ): AddToItemsUseCase = AddToItemsUseCase(historyRepository, favoritesRepository)
+        repositories: Map<StorageType, @JvmSuppressWildcards TranslatedItemsRepository>
+        ): AddToItemsUseCase = AddToItemsUseCase(repositories)
 
     @Provides
     @Singleton
     fun provideClearItemsUseCase(
-        historyRepository: HistoryRepository,
-        favoritesRepository: FavoritesRepository,
-        ): ClearItemsUseCase = ClearItemsUseCase(historyRepository, favoritesRepository)
+        repositories: Map<StorageType, @JvmSuppressWildcards TranslatedItemsRepository>
+    ): ClearItemsUseCase = ClearItemsUseCase(repositories)
 
     @Provides
     @Singleton
     fun provideRemoveFromItemsUseCase(
-        historyRepository: HistoryRepository,
-        favoritesRepository: FavoritesRepository,
-        ): RemoveFromItemsUseCase = RemoveFromItemsUseCase(historyRepository, favoritesRepository)
+        repositories: Map<StorageType, @JvmSuppressWildcards TranslatedItemsRepository>
+    ): RemoveFromItemsUseCase = RemoveFromItemsUseCase(repositories)
 
     @Provides
     @Singleton
     fun provideGetHistoryUseCase(
-        historyRepository: HistoryRepository,
-        favoritesRepository: FavoritesRepository,
-        ): GetItemsUseCase = GetItemsUseCase(historyRepository, favoritesRepository)
+        repositories: Map<StorageType, @JvmSuppressWildcards TranslatedItemsRepository>
+    ): GetItemsUseCase = GetItemsUseCase(repositories)
 
 }

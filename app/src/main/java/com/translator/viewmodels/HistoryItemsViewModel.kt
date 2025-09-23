@@ -26,7 +26,7 @@ class HistoryItemsViewModel @Inject constructor(
 
     private val _historyItems = MutableLiveData<List<Item>>(emptyList<HistoryItem>())
     val historyItems: LiveData<List<Item>> get() = _historyItems
-    private val storageType: StorageType = StorageType.History
+    private val storageType: StorageType = StorageType.HISTORY
 
 
     fun addToHistory(word: String, translation: String) {
