@@ -24,9 +24,9 @@ class FavoritesRepositoryImpl @Inject constructor(
         return getItems()
     }
 
-    override suspend fun updateItems(items: List<Item>): List<Item> {
-        dao.updateAllFavorites(items.map { FavoritesEntity(it.id, it.originalWord,
-            it.translatedWord, it.isFavorite) })
+    override suspend fun updateItem(item: Item): List<Item> {
+//        dao.updateAllFavorites(items.map { FavoritesEntity(it.id, it.originalWord,
+//            it.translatedWord, it.isFavorite) })
         return getItems()
     }
 

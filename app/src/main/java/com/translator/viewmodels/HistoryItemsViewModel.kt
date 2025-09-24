@@ -11,7 +11,7 @@ import com.translator.domain.usecases.translationitems.history.CheckIfItemFavori
 import com.translator.domain.usecases.translationitems.history.ClearItemsUseCase
 import com.translator.domain.usecases.translationitems.history.GetItemsUseCase
 import com.translator.domain.usecases.translationitems.history.RemoveFromItemsUseCase
-import com.translator.domain.usecases.translationitems.history.UpdateItemsUseCase
+import com.translator.domain.usecases.translationitems.history.UpdateItemUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HistoryItemsViewModel @Inject constructor(
     private val addToHistoryUseCase: AddToItemsUseCase,
-    private val updateItemsUseCase: UpdateItemsUseCase,
+    private val updateItemUseCase: UpdateItemUseCase,
     private val checkIfItemFavoriteUseCase: CheckIfItemFavoriteUseCase,
     private val clearHistoryUseCase: ClearItemsUseCase,
     private val removeFromHistoryUseCase: RemoveFromItemsUseCase,
@@ -43,12 +43,6 @@ class HistoryItemsViewModel @Inject constructor(
         }
     }
 
-    private fun updateHistory(list: List<Item>) {
-        _queryItems.value = list
-        viewModelScope.launch {
-            _queryItems.value = updateItemsUseCase(list)
-        }
-    }
 
     fun loadHistory() {
         viewModelScope.launch {
@@ -68,19 +62,11 @@ class HistoryItemsViewModel @Inject constructor(
         }
     }
 
-    fun manageFavorites(item: QueryItem, position: Int) {
-
-        val list = _queryItems.value
-
+    fun manageFavorites(item: QueryItem) {
         viewModelScope.launch {
-            val newList = list?.toMutableList()
-            newList?.set(position, item.toggleFavorite())
-            if (newList != null) {
-                updateHistory(newList)
-            }
-
+            val toggled = item.toggleFavorite() as QueryItem
+            _queryItems.value = updateItemUseCase(toggled)
         }
-
     }
 
 

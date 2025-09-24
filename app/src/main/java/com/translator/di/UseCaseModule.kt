@@ -9,8 +9,10 @@ import com.translator.domain.usecases.translationitems.history.GetItemsUseCase
 import com.translator.domain.usecases.translationitems.history.RemoveFromItemsUseCase
 import com.translator.domain.usecases.translation.TranslateUseCase
 import com.translator.domain.usecases.translationitems.favorites.AddToFavoritesUseCase
+import com.translator.domain.usecases.translationitems.favorites.GetFavoritesUseCase
+import com.translator.domain.usecases.translationitems.favorites.RemoveFromFavoritesUseCase
 import com.translator.domain.usecases.translationitems.history.CheckIfItemFavoriteUseCase
-import com.translator.domain.usecases.translationitems.history.UpdateItemsUseCase
+import com.translator.domain.usecases.translationitems.history.UpdateItemUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -55,7 +57,7 @@ object UseCaseModule {
     @Singleton
     fun provideUpdateItemsUseCase(
         repository: HistoryRepository
-    ): UpdateItemsUseCase = UpdateItemsUseCase(repository)
+    ): UpdateItemUseCase = UpdateItemUseCase(repository)
 
     @Provides
     @Singleton
@@ -68,5 +70,17 @@ object UseCaseModule {
     fun provideAddToFavoritesUseCase(
         repository: FavoritesRepository
     ): AddToFavoritesUseCase = AddToFavoritesUseCase(repository)
+
+    @Provides
+    @Singleton
+    fun provideRemoveFromFavoritesUseCase(
+        repository: FavoritesRepository
+    ): RemoveFromFavoritesUseCase = RemoveFromFavoritesUseCase(repository)
+
+    @Provides
+    @Singleton
+    fun provideGetFavoritesUseCase(
+        repository: FavoritesRepository
+    ): GetFavoritesUseCase = GetFavoritesUseCase(repository)
 
 }

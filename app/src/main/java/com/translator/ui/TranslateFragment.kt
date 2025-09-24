@@ -78,7 +78,7 @@ class TranslateFragment : Fragment() {
             historyItemsViewModel.removeHistoryItem(historyItem)
         },
             { historyItem, position ->
-                historyItemsViewModel.manageFavorites(historyItem, position)
+                historyItemsViewModel.manageFavorites(historyItem)
             })
         with (binding) {
             historyRecycler.layoutManager = LinearLayoutManager(activity)

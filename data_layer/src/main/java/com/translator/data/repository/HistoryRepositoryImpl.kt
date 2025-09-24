@@ -1,6 +1,5 @@
 package com.translator.data.repository
 
-import com.translator.data.local.FavoritesEntity
 import com.translator.data.local.ItemDao
 import com.translator.data.local.HistoryEntity
 import com.translator.domain.models.QueryItem
@@ -23,9 +22,13 @@ class HistoryRepositoryImpl @Inject constructor(
         return getItems()
     }
 
-    override suspend fun updateItems(items: List<Item>): List<Item> {
-        dao.updateAllHistory(items.map { HistoryEntity(it.id, it.originalWord,
-            it.translatedWord, it.isFavorite) })
+    override suspend fun updateItem(item: Item): List<Item> {
+        dao.updateHistoryItem(HistoryEntity(
+            item.id,
+            item.originalWord,
+            item.translatedWord,
+            item.isFavorite)
+        )
         return getItems()
     }
 
