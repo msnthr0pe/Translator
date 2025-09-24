@@ -1,6 +1,5 @@
 package com.translator.di
 
-import com.translator.domain.StorageType
 import com.translator.domain.repository.TranslatedItemsRepository
 import com.translator.domain.repository.TranslationRepository
 import com.translator.domain.usecases.translationitems.AddToItemsUseCase
@@ -27,25 +26,25 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideAddToItemsUseCase(
-        repositories: Map<StorageType, @JvmSuppressWildcards TranslatedItemsRepository>
-        ): AddToItemsUseCase = AddToItemsUseCase(repositories)
+        repository: TranslatedItemsRepository
+        ): AddToItemsUseCase = AddToItemsUseCase(repository)
 
     @Provides
     @Singleton
     fun provideClearItemsUseCase(
-        repositories: Map<StorageType, @JvmSuppressWildcards TranslatedItemsRepository>
-    ): ClearItemsUseCase = ClearItemsUseCase(repositories)
+        repository: TranslatedItemsRepository
+    ): ClearItemsUseCase = ClearItemsUseCase(repository)
 
     @Provides
     @Singleton
     fun provideRemoveFromItemsUseCase(
-        repositories: Map<StorageType, @JvmSuppressWildcards TranslatedItemsRepository>
-    ): RemoveFromItemsUseCase = RemoveFromItemsUseCase(repositories)
+        repository: TranslatedItemsRepository
+    ): RemoveFromItemsUseCase = RemoveFromItemsUseCase(repository)
 
     @Provides
     @Singleton
     fun provideGetHistoryUseCase(
-        repositories: Map<StorageType, @JvmSuppressWildcards TranslatedItemsRepository>
-    ): GetItemsUseCase = GetItemsUseCase(repositories)
+        repository: TranslatedItemsRepository
+    ): GetItemsUseCase = GetItemsUseCase(repository)
 
 }

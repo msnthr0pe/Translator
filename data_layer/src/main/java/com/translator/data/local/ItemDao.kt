@@ -17,17 +17,4 @@ interface ItemDao {
     @Query("DELETE FROM history")
     suspend fun clearHistory()
 
-    @Query("SELECT * FROM favorites ORDER BY id DESC")
-    suspend fun getFavorites(): List<FavoritesEntity>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addFavoritesItem(item: FavoritesEntity): Long
-
-    @Delete
-    suspend fun removeFromFavorites(item: FavoritesEntity)
-
-    @Query("DELETE FROM favorites")
-    suspend fun clearFavorites()
-
-
 }

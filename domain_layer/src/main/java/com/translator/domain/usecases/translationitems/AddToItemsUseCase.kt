@@ -1,19 +1,17 @@
 package com.translator.domain.usecases.translationitems
 
-import com.translator.domain.StorageType
 import com.translator.domain.models.CompleteTranslation
+import com.translator.domain.models.HistoryItem
 import com.translator.domain.models.Item
-import com.translator.domain.models.ItemTransfer
 import com.translator.domain.repository.TranslatedItemsRepository
 
 class AddToItemsUseCase(
-    private val repositories: Map<StorageType, TranslatedItemsRepository>
+    private val repository: TranslatedItemsRepository
     ) {
 
-    suspend operator fun invoke(translation: CompleteTranslation,  storageType: StorageType): List<Item> {
+    suspend operator fun invoke(translation: CompleteTranslation): List<Item> {
 
-        val repository = repositories[storageType] ?: throw IllegalArgumentException("Unknown storage type: $storageType")
-        return repository.addItem(ItemTransfer(
+        return repository.addItem(HistoryItem(
             originalWord = translation.originalWord,
             translatedWord = translation.translatedWord)
         )

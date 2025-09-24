@@ -7,5 +7,6 @@ import androidx.room.PrimaryKey
 data class HistoryEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val originalWord: String,
-    val translatedWord: String
+    val translatedWord: String,
+    val isFavorite: Boolean,
 )

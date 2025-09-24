@@ -5,9 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.translator.domain.StorageType
 import com.translator.domain.models.CompleteTranslation
-import com.translator.domain.models.FavoritesItem
 import com.translator.domain.models.HistoryItem
 import com.translator.domain.models.Item
 import com.translator.domain.usecases.translationitems.AddToItemsUseCase
@@ -26,25 +24,24 @@ class FavoritesItemsViewModel @Inject constructor(
     private val getFavoritesUseCase: GetItemsUseCase,
 ): ViewModel() {
 
-    private val _favoritesItems = MutableLiveData<List<Item>>(emptyList<FavoritesItem>())
+    private val _favoritesItems = MutableLiveData<List<Item>>(emptyList<HistoryItem>())
     val favoritesItems: LiveData<List<Item>> get() = _favoritesItems
-    private val storageType: StorageType = StorageType.FAVORITES
 
 
-    fun manageFavorites(item: Item, position: Int, list: List<Item>): List<Item> {
+    fun manageFavorites(item: HistoryItem, position: Int, list: List<Item>): List<Item> {
 
-//        viewModelScope.launch {
-//            if (isFavorite) {
-//                _favoritesItems.value = addToFavoritesUseCase(
-//                    CompleteTranslation(
-//                        favoritesItem.originalWord,
-//                        favoritesItem.translatedWord
-//                    ), storageType
-//                )
-//            } else {
-//                removeFavoritesItem(favoritesItem)
-//            }
-//        }
+        viewModelScope.launch {
+            if (list[position].isFavorite) {
+                _favoritesItems.value = addToFavoritesUseCase(
+                    CompleteTranslation(
+                        item.originalWord,
+                        item.translatedWord
+                    )
+                )
+            } else {
+                removeFavoritesItem(HistoryItem(item.id, item.originalWord, item.translatedWord))
+            }
+        }
 
         val newList = list.toMutableList()
         newList[position] = item.toggleFavorite()
@@ -52,21 +49,22 @@ class FavoritesItemsViewModel @Inject constructor(
 
     }
 
+
     fun loadFavorites() {
         viewModelScope.launch {
-            _favoritesItems.value = getFavoritesUseCase(storageType)
+            _favoritesItems.value = getFavoritesUseCase()
         }
     }
 
     fun clearFavorites() {
         viewModelScope.launch {
-            _favoritesItems.value = clearFavoritesUseCase(storageType)
+            _favoritesItems.value = clearFavoritesUseCase()
         }
     }
 
-    fun removeFavoritesItem(favoritesItem: FavoritesItem) {
+    fun removeFavoritesItem(historyItem: HistoryItem) {
         viewModelScope.launch {
-            _favoritesItems.value = removeFromFavoritesUseCase(favoritesItem, storageType)
+            _favoritesItems.value = removeFromFavoritesUseCase(historyItem)
         }
     }
 }

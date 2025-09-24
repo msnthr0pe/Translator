@@ -11,7 +11,6 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.translator.databinding.FragmentTranslateBinding
-import com.translator.domain.models.FavoritesItem
 import com.translator.domain.models.HistoryItem
 import com.translator.ui.recycler.HistoryAdapter
 import com.translator.viewmodels.FavoritesItemsViewModel
