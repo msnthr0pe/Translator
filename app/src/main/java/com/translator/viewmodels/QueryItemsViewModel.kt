@@ -1,6 +1,5 @@
 package com.translator.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -46,7 +45,6 @@ class QueryItemsViewModel @Inject constructor(
             if (checkIfItemFavoriteUseCase(newItem)) {
                 newItem = newItem.toggleFavorite() as QueryItem
             }
-            Log.d("TranslatorApp", checkIfFavorite(newItem).toString())
             if (checkIfFavorite(newItem)) {
                 _historyItems.value = addToHistoryUseCase(
                     newItem.setFavorite(true)
@@ -58,7 +56,6 @@ class QueryItemsViewModel @Inject constructor(
             }
         }
     }
-
 
     fun loadHistory() {
         viewModelScope.launch {

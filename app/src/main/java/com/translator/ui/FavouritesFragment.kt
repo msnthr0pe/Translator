@@ -74,7 +74,6 @@ class FavouritesFragment : Fragment() {
                 recyclerLayout.visibility = View.GONE
                 favoritesPlaceholder.visibility = View.VISIBLE
             }
-
         }
     }
 }

@@ -13,7 +13,7 @@ import com.translator.domain.models.QueryItem
 
 object FavoritesDiffCallback : DiffUtil.ItemCallback<QueryItem>() {
     override fun areItemsTheSame(oldItem: QueryItem, newItem: QueryItem): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem.originalWord == newItem.originalWord
     }
 
     override fun areContentsTheSame(oldItem: QueryItem, newItem: QueryItem): Boolean {
@@ -27,7 +27,7 @@ class FavoritesAdapter(private val onChangeFavorites: (QueryItem) -> Unit) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesViewHolder {
         return FavoritesViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_history, parent, false)
+                .inflate(R.layout.item_favorites, parent, false)
         )
     }
 

@@ -1,11 +1,13 @@
 package com.translator.ui
 
+import android.content.Context
 import com.translator.viewmodels.QueryItemsViewModel
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
@@ -76,8 +78,9 @@ class TranslateFragment : Fragment() {
                     translationViewModel.editTextContents.value.orEmpty(),
                     it
                 )
+                binding.translationQuery.text.clear()
+                hideKeyboard()
             }
-
         }
     }
 
@@ -94,6 +97,7 @@ class TranslateFragment : Fragment() {
         }
 
         queryItemsViewModel.historyItems.observe(viewLifecycleOwner) { list ->
+            adapter.submitList(emptyList())
             adapter.submitList(list.map {
                 QueryItem(
                     it.id,
@@ -109,8 +113,9 @@ class TranslateFragment : Fragment() {
             }
         }
         binding.clearHistoryButton.setOnClickListener {
+            adapter.submitList(emptyList())
             queryItemsViewModel.clearHistory()
-            }
+        }
     }
 
     private fun setHistoryVisibility(setVisible: Boolean) {
@@ -124,5 +129,11 @@ class TranslateFragment : Fragment() {
             }
 
         }
+    }
+
+    fun Fragment.hideKeyboard() {
+        val imm = requireActivity().getSystemService(
+            Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 }
