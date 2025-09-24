@@ -22,7 +22,7 @@ object HistoryDiffCallback : DiffUtil.ItemCallback<QueryItem>() {
 }
 
 class HistoryAdapter(private val onDeletePressed: (QueryItem) -> Unit,
-                     private val onAddToFavorites: (QueryItem, Int) -> Unit) :
+                     private val onChangeFavorites: (QueryItem) -> Unit) :
     ListAdapter<QueryItem, HistoryAdapter.HistoryViewHolder>(HistoryDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
@@ -33,7 +33,7 @@ class HistoryAdapter(private val onDeletePressed: (QueryItem) -> Unit,
     }
 
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
-        holder.bind(getItem(position), position)
+        holder.bind(getItem(position))
     }
 
     inner class HistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -42,7 +42,7 @@ class HistoryAdapter(private val onDeletePressed: (QueryItem) -> Unit,
         private val clearBtn: ImageView by lazy { itemView.findViewById(R.id.recycler_delete_button) }
         private val toFavoritesBtn: ImageView by lazy { itemView.findViewById(R.id.translation_to_favorites_button) }
 
-        fun bind(item: QueryItem, position: Int) {
+        fun bind(item: QueryItem) {
             historyOriginalWord.text = item.originalWord
             historyTranslatedWord.text = item.translatedWord
             clearBtn.setOnClickListener {
@@ -50,7 +50,7 @@ class HistoryAdapter(private val onDeletePressed: (QueryItem) -> Unit,
             }
 
             toFavoritesBtn.setOnClickListener {
-                onAddToFavorites(item, position)
+                onChangeFavorites(item)
             }
 
             toFavoritesBtn.setImageResource(

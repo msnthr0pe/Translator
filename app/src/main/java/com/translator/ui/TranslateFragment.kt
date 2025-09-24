@@ -2,7 +2,6 @@ package com.translator.ui
 
 import com.translator.viewmodels.HistoryItemsViewModel
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -66,7 +65,7 @@ class TranslateFragment : Fragment() {
 
         translationViewModel.errorState.observe(viewLifecycleOwner) {
             if (it) {
-                Toast.makeText(activity, "Отсутствует интернет", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, "Отсутствует подключение к интернету", Toast.LENGTH_SHORT).show()
                 translationViewModel.resetErrorState()
             }
         }
@@ -85,8 +84,8 @@ class TranslateFragment : Fragment() {
         val adapter = HistoryAdapter ({ historyItem ->
             historyItemsViewModel.removeHistoryItem(historyItem)
         },
-            { historyItem, position ->
-                historyItemsViewModel.manageFavorites(historyItem)
+            { historyItem ->
+                historyItemsViewModel.onChangeFavorites(historyItem)
             })
         with (binding) {
             historyRecycler.layoutManager = LinearLayoutManager(activity)
@@ -94,7 +93,6 @@ class TranslateFragment : Fragment() {
         }
 
         historyItemsViewModel.historyItems.observe(viewLifecycleOwner) { list ->
-            Log.d("TranslatorApp", list.toString())
             adapter.submitList(list.map {
                 QueryItem(
                     it.id,

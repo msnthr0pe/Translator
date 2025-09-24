@@ -1,5 +1,6 @@
 package com.translator.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -34,8 +35,8 @@ class HistoryItemsViewModel @Inject constructor(
     private val clearFavoritesUseCase: ClearFavoritesUseCase,
     ): ViewModel() {
 
-    private val _queryItems = MutableLiveData<List<Item>>(emptyList<QueryItem>())
-    val historyItems: LiveData<List<Item>> get() = _queryItems
+    private val _historyItems = MutableLiveData<List<Item>>(emptyList<QueryItem>())
+    val historyItems: LiveData<List<Item>> get() = _historyItems
     private val _favoritesItems = MutableLiveData<List<Item>>(emptyList<QueryItem>())
     val favoritesItems: LiveData<List<Item>> get() = _favoritesItems
     fun addToHistory(word: String, translation: String) {
@@ -45,7 +46,7 @@ class HistoryItemsViewModel @Inject constructor(
             if (checkIfItemFavoriteUseCase(newItem)) {
                 newItem = newItem.toggleFavorite() as QueryItem
             }
-            _queryItems.value = addToHistoryUseCase(
+            _historyItems.value = addToHistoryUseCase(
                 newItem
             )
         }
@@ -54,33 +55,35 @@ class HistoryItemsViewModel @Inject constructor(
 
     fun loadHistory() {
         viewModelScope.launch {
-            _queryItems.value = getHistoryUseCase()
+            _historyItems.value = getHistoryUseCase()
         }
     }
 
     fun clearHistory() {
         viewModelScope.launch {
-            _queryItems.value = clearHistoryUseCase()
+            _historyItems.value = clearHistoryUseCase()
         }
     }
 
     fun removeHistoryItem(queryItem: QueryItem) {
         viewModelScope.launch {
-            _queryItems.value = removeFromHistoryUseCase(queryItem)
+            _historyItems.value = removeFromHistoryUseCase(queryItem)
         }
     }
 
-    fun manageFavorites(item: QueryItem) {
+    fun onChangeFavorites(item: QueryItem) {
         viewModelScope.launch {
             val toggled = item.toggleFavorite() as QueryItem
 
-            _queryItems.value = updateItemUseCase(toggled)
-
+            Log.d("TranslatorApp", " ${historyItems.value.toString()}")
+            _historyItems.value = updateItemUseCase(toggled)
+            Log.d("TranslatorApp", " ${historyItems.value.toString()}")
             if (toggled.isFavorite) {
                 _favoritesItems.value = addToFavoritesUseCase(toggled)
             } else {
                 _favoritesItems.value = removeFromFavoritesUseCase(toggled)
             }
+
         }
     }
 

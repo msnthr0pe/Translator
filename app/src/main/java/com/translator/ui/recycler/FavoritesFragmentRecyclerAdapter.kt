@@ -21,7 +21,7 @@ object FavoritesDiffCallback : DiffUtil.ItemCallback<QueryItem>() {
     }
 }
 
-class FavoritesAdapter(private val onAddToFavorites: (QueryItem) -> Unit) :
+class FavoritesAdapter(private val onChangeFavorites: (QueryItem) -> Unit) :
     ListAdapter<QueryItem, FavoritesAdapter.FavoritesViewHolder>(FavoritesDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesViewHolder {
@@ -45,7 +45,7 @@ class FavoritesAdapter(private val onAddToFavorites: (QueryItem) -> Unit) :
             historyTranslatedWord.text = item.translatedWord
 
             toFavoritesBtn.setOnClickListener {
-                onAddToFavorites(item)
+                onChangeFavorites(item)
             }
 
             toFavoritesBtn.setImageResource(

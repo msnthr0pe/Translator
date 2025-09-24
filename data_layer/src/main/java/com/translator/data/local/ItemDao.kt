@@ -20,8 +20,16 @@ interface ItemDao {
     @Query("DELETE FROM history")
     suspend fun clearHistory()
 
-    @Update
-    suspend fun updateHistoryItem(item: HistoryEntity)
+    @Query("""
+    UPDATE history 
+    SET translatedWord = :translatedWord, isFavorite = :isFavorite 
+    WHERE originalWord = :originalWord
+""")
+    suspend fun updateHistoryItem(
+        originalWord: String,
+        translatedWord: String,
+        isFavorite: Boolean
+    )
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addFavoritesItem(item: FavoritesEntity)

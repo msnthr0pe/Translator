@@ -22,7 +22,7 @@ class FavoritesRepositoryImpl @Inject constructor(
         return getItems()
     }
 
-    override suspend fun updateItem(item: Item): List<Item> {
+    override suspend fun updateItemByWord(item: Item): List<Item> {
         dao.addFavoritesItem(
             FavoritesEntity(
                 originalWord = item.originalWord,

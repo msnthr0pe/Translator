@@ -38,8 +38,8 @@ class FavouritesFragment : Fragment() {
 
     private fun setupFavoritesRecycler() {
         val adapter = FavoritesAdapter(
-            onAddToFavorites = { favoriteItem ->
-                historyItemsViewModel.manageFavorites(favoriteItem)
+            { favoriteItem ->
+                historyItemsViewModel.onChangeFavorites(favoriteItem)
             }
         )
 

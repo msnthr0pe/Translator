@@ -9,6 +9,6 @@ class UpdateItemUseCase(
 
     suspend operator fun invoke(item: Item): List<Item> {
 
-        return repository.updateItem(item)
+        return repository.updateItemByWord(item)
     }
 }
