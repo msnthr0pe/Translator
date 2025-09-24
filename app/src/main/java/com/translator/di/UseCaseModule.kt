@@ -7,6 +7,7 @@ import com.translator.domain.usecases.translationitems.ClearItemsUseCase
 import com.translator.domain.usecases.translationitems.GetItemsUseCase
 import com.translator.domain.usecases.translationitems.RemoveFromItemsUseCase
 import com.translator.domain.usecases.translation.TranslateUseCase
+import com.translator.domain.usecases.translationitems.UpdateItemsUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -46,5 +47,11 @@ object UseCaseModule {
     fun provideGetHistoryUseCase(
         repository: TranslatedItemsRepository
     ): GetItemsUseCase = GetItemsUseCase(repository)
+
+    @Provides
+    @Singleton
+    fun provideUpdateItemsUseCase(
+        repository: TranslatedItemsRepository
+    ): UpdateItemsUseCase = UpdateItemsUseCase(repository)
 
 }

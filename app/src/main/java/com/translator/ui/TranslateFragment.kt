@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.translator.databinding.FragmentTranslateBinding
 import com.translator.domain.models.HistoryItem
 import com.translator.ui.recycler.HistoryAdapter
-import com.translator.viewmodels.FavoritesItemsViewModel
 import com.translator.viewmodels.TranslationViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,7 +22,6 @@ class TranslateFragment : Fragment() {
     private val binding get() = _binding!!
     private val translationViewModel: TranslationViewModel by activityViewModels()
     private val historyItemsViewModel: HistoryItemsViewModel by activityViewModels()
-    private val favoritesItemsViewModel: FavoritesItemsViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -80,11 +78,7 @@ class TranslateFragment : Fragment() {
             historyItemsViewModel.removeHistoryItem(historyItem)
         },
             { historyItem, position ->
-                historyItemsViewModel.updateHistory(favoritesItemsViewModel.manageFavorites(
-                    historyItem, position,
-                    historyItemsViewModel.historyItems.value.orEmpty()
-                ))
-
+                historyItemsViewModel.manageFavorites(historyItem, position)
             })
         with (binding) {
             historyRecycler.layoutManager = LinearLayoutManager(activity)

@@ -22,6 +22,12 @@ class HistoryRepositoryImpl @Inject constructor(
         return getItems()
     }
 
+    override suspend fun updateItems(items: List<Item>): List<Item> {
+        dao.updateAll(items.map { HistoryEntity(it.id, it.originalWord,
+            it.translatedWord, it.isFavorite) })
+        return getItems()
+    }
+
     override suspend fun getItems(): List<Item> {
         return dao.getHistory().map { HistoryItem(it.id, it.originalWord,
             it.translatedWord, it.isFavorite) }

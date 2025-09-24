@@ -17,4 +17,7 @@ interface ItemDao {
     @Query("DELETE FROM history")
     suspend fun clearHistory()
 
+    @Update
+    suspend fun updateAll(items: List<HistoryEntity>)
+
 }
