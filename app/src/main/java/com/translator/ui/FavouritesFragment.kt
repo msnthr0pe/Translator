@@ -60,8 +60,7 @@ class FavouritesFragment : Fragment() {
             }
         }
         binding.clearFavoritesButton.setOnClickListener {
-            queryItemsViewModel.uncheckFavorites()
-            queryItemsViewModel.clearFavorites()
+            queryItemsViewModel.uncheckAndClearFavorites()
         }
     }
 

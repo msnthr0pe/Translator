@@ -94,23 +94,18 @@ class QueryItemsViewModel @Inject constructor(
         return favorites.any { it.originalWord == queryItem.originalWord }
     }
 
-    fun uncheckFavorites() {
+    fun uncheckAndClearFavorites() {
         viewModelScope.launch {
             _favoritesItems.value?.forEach {
                 _historyItems.value = updateItemUseCase(it.toggleFavorite())
             }
+            _favoritesItems.value = clearFavoritesUseCase()
         }
     }
 
     fun loadFavorites() {
         viewModelScope.launch {
             _favoritesItems.value = getFavoriteUseCase()
-        }
-    }
-
-    fun clearFavorites() {
-        viewModelScope.launch {
-            _favoritesItems.value = clearFavoritesUseCase()
         }
     }
 }
