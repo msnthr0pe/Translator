@@ -36,19 +36,6 @@ class HistoryRepositoryImpl @Inject constructor(
         if (returnedItem == null) {
             return false
         }
-//        if (returnedItem.isFavorite) {
-//            dao.addFavoritesItem(FavoritesEntity(
-//                originalWord = item.originalWord,
-//                translatedWord = item.translatedWord,
-//                isFavorite = true,
-//            ))
-//        } else {
-//            dao.removeFromFavorites(FavoritesEntity(
-//                originalWord = item.originalWord,
-//                translatedWord = item.translatedWord,
-//                isFavorite = false,
-//            ))
-//        }
         return returnedItem.isFavorite
     }
 

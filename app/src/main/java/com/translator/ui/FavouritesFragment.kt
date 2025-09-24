@@ -32,10 +32,12 @@ class FavouritesFragment : Fragment() {
         loadFavorites()
     }
 
+    //Получение списка избранных слов
     private fun loadFavorites() {
         queryItemsViewModel.loadFavorites()
     }
 
+    //Настройка списка избранных слов
     private fun setupFavoritesRecycler() {
         val adapter = FavoritesAdapter { favoriteItem ->
             queryItemsViewModel.onChangeFavorites(favoriteItem)
@@ -64,6 +66,7 @@ class FavouritesFragment : Fragment() {
         }
     }
 
+    //Логика отображения спика избранных слов или плейсхолдера вместо него
     private fun setFavoritesVisibility(setVisible: Boolean) {
         with(binding) {
             if (setVisible){

@@ -18,6 +18,14 @@ import com.translator.ui.recycler.HistoryAdapter
 import com.translator.viewmodels.TranslationViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+
+//В этом приложении я постарался обработать все возможные типы взаимодейтвия с пользователем.
+//Добавление в избранное одного элемента истории ведёт к автоматическому отображению
+//такого же состояния у таких же элементов истории. К примеру если один раз
+//сохранить "hello" в избранном, то каждый раз при переводе этого слова оно будет отображаться
+//как таковое. Постарался, чтобы все функции работали как надо, настроил корректное отображение
+//элементов на экране. Ну а вообше мне приложение очень нравится. Оказывается API Skyeng
+//иногда переводит лучше конкурентов. Вобщем задача была интересная :)
 @AndroidEntryPoint
 class TranslateFragment : Fragment() {
     private var _binding: FragmentTranslateBinding? = null
@@ -41,10 +49,12 @@ class TranslateFragment : Fragment() {
         loadHistory()
     }
 
+    //Получение списка истории переводов
     private fun loadHistory() {
         queryItemsViewModel.loadHistory()
     }
 
+    //Метод для настройки наблюдателей за результатом перевода и текстом ввода
     private fun setupObservers() {
         translationViewModel.translationResult.observe(viewLifecycleOwner) {
             binding.translationResultLayout.visibility = View.VISIBLE
@@ -60,6 +70,7 @@ class TranslateFragment : Fragment() {
         }
     }
 
+    //Настройка взаимодействий с вводом текста и кнопкой перевода
     private fun setupInteractions() {
         binding.translationQuery.doOnTextChanged { text, _, _, _ ->
             translationViewModel.updateEditTextContents(text.toString())
@@ -72,6 +83,7 @@ class TranslateFragment : Fragment() {
             }
         }
 
+        //Осуществление перевода и вызов колбека для безопасной передачи в историю
         binding.transalteButton.setOnClickListener {
             translationViewModel.translate(translationViewModel.editTextContents.value.toString()) {
                 queryItemsViewModel.addToHistory(
@@ -83,6 +95,7 @@ class TranslateFragment : Fragment() {
         }
     }
 
+    //Настройка списка истории переводов
     private fun setupHistoryRecycler() {
         val adapter = HistoryAdapter ({ historyItem ->
             queryItemsViewModel.removeHistoryItem(historyItem)

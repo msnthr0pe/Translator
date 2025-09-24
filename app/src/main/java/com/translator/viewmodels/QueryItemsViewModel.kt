@@ -10,22 +10,22 @@ import com.translator.domain.usecases.translationitems.favorites.AddToFavoritesU
 import com.translator.domain.usecases.translationitems.favorites.ClearFavoritesUseCase
 import com.translator.domain.usecases.translationitems.favorites.GetFavoritesUseCase
 import com.translator.domain.usecases.translationitems.favorites.RemoveFromFavoritesUseCase
-import com.translator.domain.usecases.translationitems.history.AddToItemsUseCase
-import com.translator.domain.usecases.translationitems.history.ClearItemsUseCase
-import com.translator.domain.usecases.translationitems.history.GetItemsUseCase
-import com.translator.domain.usecases.translationitems.history.RemoveFromItemsUseCase
-import com.translator.domain.usecases.translationitems.history.UpdateItemUseCase
+import com.translator.domain.usecases.translationitems.history.AddToHistoryUseCase
+import com.translator.domain.usecases.translationitems.history.ClearHistoryUseCase
+import com.translator.domain.usecases.translationitems.history.GetHistoryUseCase
+import com.translator.domain.usecases.translationitems.history.RemoveFromHistoryUseCase
+import com.translator.domain.usecases.translationitems.history.UpdateHistoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class QueryItemsViewModel @Inject constructor(
-    private val addToHistoryUseCase: AddToItemsUseCase,
-    private val updateItemUseCase: UpdateItemUseCase,
-    private val clearHistoryUseCase: ClearItemsUseCase,
-    private val removeFromHistoryUseCase: RemoveFromItemsUseCase,
-    private val getHistoryUseCase: GetItemsUseCase,
+    private val addToHistoryUseCase: AddToHistoryUseCase,
+    private val updateHistoryUseCase: UpdateHistoryUseCase,
+    private val clearHistoryUseCase: ClearHistoryUseCase,
+    private val removeFromHistoryUseCase: RemoveFromHistoryUseCase,
+    private val getHistoryUseCase: GetHistoryUseCase,
     private val addToFavoritesUseCase: AddToFavoritesUseCase,
     private val removeFromFavoritesUseCase: RemoveFromFavoritesUseCase,
     private val getFavoriteUseCase: GetFavoritesUseCase,
@@ -68,7 +68,7 @@ class QueryItemsViewModel @Inject constructor(
         viewModelScope.launch {
             val toggled = item.toggleFavorite() as QueryItem
 
-            _historyItems.value = updateItemUseCase(toggled)
+            _historyItems.value = updateHistoryUseCase(toggled)
             if (toggled.isFavorite) {
                 _favoritesItems.value = addToFavoritesUseCase(toggled)
             } else {
@@ -81,7 +81,7 @@ class QueryItemsViewModel @Inject constructor(
     fun uncheckAndClearFavorites() {
         viewModelScope.launch {
             _favoritesItems.value?.forEach {
-                _historyItems.value = updateItemUseCase(it.toggleFavorite())
+                _historyItems.value = updateHistoryUseCase(it.toggleFavorite())
             }
             _favoritesItems.value = clearFavoritesUseCase()
         }

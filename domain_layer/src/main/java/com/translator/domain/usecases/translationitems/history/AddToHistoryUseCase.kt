@@ -4,7 +4,7 @@ import com.translator.domain.models.Item
 import com.translator.domain.repository.HistoryRepository
 import com.translator.domain.usecases.translationitems.favorites.GetFavoritesUseCase
 
-class AddToItemsUseCase(
+class AddToHistoryUseCase(
     private val historyRepository: HistoryRepository,
     private val getFavoritesUseCase: GetFavoritesUseCase,
     ) {

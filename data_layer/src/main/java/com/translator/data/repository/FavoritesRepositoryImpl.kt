@@ -33,10 +33,6 @@ class FavoritesRepositoryImpl @Inject constructor(
         return getItems()
     }
 
-    override suspend fun checkIfFavorite(item: Item): Boolean {
-        return dao.isFavorite(item.originalWord)
-    }
-
     override suspend fun getItems(): List<Item> {
         return dao.getFavorites().map {
             QueryItem(

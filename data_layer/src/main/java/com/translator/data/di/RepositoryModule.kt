@@ -7,7 +7,6 @@ import com.translator.data.repository.FavoritesRepositoryImpl
 import com.translator.data.repository.TranslationRepositoryImpl
 import com.translator.domain.repository.FavoritesRepository
 import com.translator.domain.repository.HistoryRepository
-import com.translator.domain.repository.TranslatedItemsRepository
 import com.translator.domain.repository.TranslationRepository
 import dagger.Module
 import dagger.Provides
