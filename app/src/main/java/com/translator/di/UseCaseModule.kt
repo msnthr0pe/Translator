@@ -1,14 +1,16 @@
 package com.translator.di
 
-import com.translator.domain.repository.TranslatedHistoryRepository
+import com.translator.domain.repository.FavoritesRepository
+import com.translator.domain.repository.HistoryRepository
 import com.translator.domain.repository.TranslationRepository
-import com.translator.domain.usecases.translationitems.AddToItemsUseCase
-import com.translator.domain.usecases.translationitems.ClearItemsUseCase
-import com.translator.domain.usecases.translationitems.GetItemsUseCase
-import com.translator.domain.usecases.translationitems.RemoveFromItemsUseCase
+import com.translator.domain.usecases.translationitems.history.AddToItemsUseCase
+import com.translator.domain.usecases.translationitems.history.ClearItemsUseCase
+import com.translator.domain.usecases.translationitems.history.GetItemsUseCase
+import com.translator.domain.usecases.translationitems.history.RemoveFromItemsUseCase
 import com.translator.domain.usecases.translation.TranslateUseCase
-import com.translator.domain.usecases.translationitems.CheckIfItemFavoriteUseCase
-import com.translator.domain.usecases.translationitems.UpdateItemsUseCase
+import com.translator.domain.usecases.translationitems.favorites.AddToFavoritesUseCase
+import com.translator.domain.usecases.translationitems.history.CheckIfItemFavoriteUseCase
+import com.translator.domain.usecases.translationitems.history.UpdateItemsUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,37 +30,43 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideAddToItemsUseCase(
-        repository: TranslatedHistoryRepository
+        repository: HistoryRepository
         ): AddToItemsUseCase = AddToItemsUseCase(repository)
 
     @Provides
     @Singleton
     fun provideClearItemsUseCase(
-        repository: TranslatedHistoryRepository
+        repository: HistoryRepository
     ): ClearItemsUseCase = ClearItemsUseCase(repository)
 
     @Provides
     @Singleton
     fun provideRemoveFromItemsUseCase(
-        repository: TranslatedHistoryRepository
+        repository: HistoryRepository
     ): RemoveFromItemsUseCase = RemoveFromItemsUseCase(repository)
 
     @Provides
     @Singleton
     fun provideGetHistoryUseCase(
-        repository: TranslatedHistoryRepository
+        repository: HistoryRepository
     ): GetItemsUseCase = GetItemsUseCase(repository)
 
     @Provides
     @Singleton
     fun provideUpdateItemsUseCase(
-        repository: TranslatedHistoryRepository
+        repository: HistoryRepository
     ): UpdateItemsUseCase = UpdateItemsUseCase(repository)
 
     @Provides
     @Singleton
     fun provideCheckIfItemFavoriteUseCase(
-        repository: TranslatedHistoryRepository
+        repository: HistoryRepository
     ): CheckIfItemFavoriteUseCase = CheckIfItemFavoriteUseCase(repository)
+
+    @Provides
+    @Singleton
+    fun provideAddToFavoritesUseCase(
+        repository: FavoritesRepository
+    ): AddToFavoritesUseCase = AddToFavoritesUseCase(repository)
 
 }

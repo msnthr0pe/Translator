@@ -4,14 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.translator.domain.models.HistoryItem
+import com.translator.domain.models.QueryItem
 import com.translator.domain.models.Item
-import com.translator.domain.usecases.translationitems.AddToItemsUseCase
-import com.translator.domain.usecases.translationitems.CheckIfItemFavoriteUseCase
-import com.translator.domain.usecases.translationitems.ClearItemsUseCase
-import com.translator.domain.usecases.translationitems.GetItemsUseCase
-import com.translator.domain.usecases.translationitems.RemoveFromItemsUseCase
-import com.translator.domain.usecases.translationitems.UpdateItemsUseCase
+import com.translator.domain.usecases.translationitems.history.AddToItemsUseCase
+import com.translator.domain.usecases.translationitems.history.CheckIfItemFavoriteUseCase
+import com.translator.domain.usecases.translationitems.history.ClearItemsUseCase
+import com.translator.domain.usecases.translationitems.history.GetItemsUseCase
+import com.translator.domain.usecases.translationitems.history.RemoveFromItemsUseCase
+import com.translator.domain.usecases.translationitems.history.UpdateItemsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,51 +26,51 @@ class HistoryItemsViewModel @Inject constructor(
     private val getHistoryUseCase: GetItemsUseCase,
 ): ViewModel() {
 
-    private val _historyItems = MutableLiveData<List<Item>>(emptyList<HistoryItem>())
-    val historyItems: LiveData<List<Item>> get() = _historyItems
-    private val _favoritesItems = MutableLiveData<List<Item>>(emptyList<HistoryItem>())
+    private val _queryItems = MutableLiveData<List<Item>>(emptyList<QueryItem>())
+    val historyItems: LiveData<List<Item>> get() = _queryItems
+    private val _favoritesItems = MutableLiveData<List<Item>>(emptyList<QueryItem>())
     val favoritesItems: LiveData<List<Item>> get() = _favoritesItems
     fun addToHistory(word: String, translation: String) {
         viewModelScope.launch {
-            var newItem = HistoryItem(originalWord = word,
+            var newItem = QueryItem(originalWord = word,
                 translatedWord = translation)
             if (checkIfItemFavoriteUseCase(newItem)) {
-                newItem = newItem.toggleFavorite() as HistoryItem
+                newItem = newItem.toggleFavorite() as QueryItem
             }
-            _historyItems.value = addToHistoryUseCase(
+            _queryItems.value = addToHistoryUseCase(
                 newItem
             )
         }
     }
 
     private fun updateHistory(list: List<Item>) {
-        _historyItems.value = list
+        _queryItems.value = list
         viewModelScope.launch {
-            _historyItems.value = updateItemsUseCase(list)
+            _queryItems.value = updateItemsUseCase(list)
         }
     }
 
     fun loadHistory() {
         viewModelScope.launch {
-            _historyItems.value = getHistoryUseCase()
+            _queryItems.value = getHistoryUseCase()
         }
     }
 
     fun clearHistory() {
         viewModelScope.launch {
-            _historyItems.value = clearHistoryUseCase()
+            _queryItems.value = clearHistoryUseCase()
         }
     }
 
-    fun removeHistoryItem(historyItem: HistoryItem) {
+    fun removeHistoryItem(queryItem: QueryItem) {
         viewModelScope.launch {
-            _historyItems.value = removeFromHistoryUseCase(historyItem)
+            _queryItems.value = removeFromHistoryUseCase(queryItem)
         }
     }
 
-    fun manageFavorites(item: HistoryItem, position: Int) {
+    fun manageFavorites(item: QueryItem, position: Int) {
 
-        val list = _historyItems.value
+        val list = _queryItems.value
 
         viewModelScope.launch {
             val newList = list?.toMutableList()
@@ -80,7 +80,6 @@ class HistoryItemsViewModel @Inject constructor(
             }
 
         }
-
 
     }
 
