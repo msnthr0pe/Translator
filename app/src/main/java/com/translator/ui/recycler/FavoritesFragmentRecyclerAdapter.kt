@@ -21,7 +21,7 @@ object FavoritesDiffCallback : DiffUtil.ItemCallback<QueryItem>() {
     }
 }
 
-class FavoritesAdapter(private val onAddToFavorites: (QueryItem, Int) -> Unit) :
+class FavoritesAdapter(private val onAddToFavorites: (QueryItem) -> Unit) :
     ListAdapter<QueryItem, FavoritesAdapter.FavoritesViewHolder>(FavoritesDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesViewHolder {
@@ -32,7 +32,7 @@ class FavoritesAdapter(private val onAddToFavorites: (QueryItem, Int) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: FavoritesViewHolder, position: Int) {
-        holder.bind(getItem(position), position)
+        holder.bind(getItem(position))
     }
 
     inner class FavoritesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -40,12 +40,12 @@ class FavoritesAdapter(private val onAddToFavorites: (QueryItem, Int) -> Unit) :
         private val historyTranslatedWord: TextView by lazy { itemView.findViewById(R.id.recycler_history_translated_word) }
         private val toFavoritesBtn: ImageView by lazy { itemView.findViewById(R.id.translation_to_favorites_button) }
 
-        fun bind(item: QueryItem, position: Int) {
+        fun bind(item: QueryItem) {
             historyOriginalWord.text = item.originalWord
             historyTranslatedWord.text = item.translatedWord
 
             toFavoritesBtn.setOnClickListener {
-                onAddToFavorites(item, position)
+                onAddToFavorites(item)
             }
 
             toFavoritesBtn.setImageResource(

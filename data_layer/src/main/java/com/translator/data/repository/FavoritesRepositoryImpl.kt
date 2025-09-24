@@ -2,11 +2,9 @@ package com.translator.data.repository
 
 import com.translator.data.local.FavoritesEntity
 import com.translator.data.local.ItemDao
-import com.translator.data.local.HistoryEntity
 import com.translator.domain.models.QueryItem
 import com.translator.domain.models.Item
 import com.translator.domain.repository.FavoritesRepository
-import com.translator.domain.repository.HistoryRepository
 import javax.inject.Inject
 
 class FavoritesRepositoryImpl @Inject constructor(
@@ -18,47 +16,39 @@ class FavoritesRepositoryImpl @Inject constructor(
             FavoritesEntity(
                 originalWord = item.originalWord,
                 translatedWord = item.translatedWord,
-                isFavorite = item.isFavorite
+                isFavorite = true
             )
         )
         return getItems()
     }
 
     override suspend fun updateItem(item: Item): List<Item> {
-//        dao.updateAllFavorites(items.map { FavoritesEntity(it.id, it.originalWord,
-//            it.translatedWord, it.isFavorite) })
+        dao.addFavoritesItem(
+            FavoritesEntity(
+                originalWord = item.originalWord,
+                translatedWord = item.translatedWord,
+                isFavorite = item.isFavorite
+            )
+        )
         return getItems()
     }
 
     override suspend fun checkIfFavorite(item: Item): Boolean {
-        val returnedItem = dao.getItem(item.originalWord)
-        if (returnedItem == null) {
-            return false
-        }
-        if (returnedItem.isFavorite) {
-            dao.addFavoritesItem(FavoritesEntity(
-                originalWord = item.originalWord,
-                translatedWord = item.translatedWord,
-                isFavorite = true,
-            ))
-        } else {
-            dao.removeFromFavorites(FavoritesEntity(
-                originalWord = item.originalWord,
-                translatedWord = item.translatedWord,
-                isFavorite = false,
-            ))
-        }
-        return returnedItem.isFavorite
+        return dao.isFavorite(item.originalWord)
     }
 
     override suspend fun getItems(): List<Item> {
-        return dao.getFavorites().map { QueryItem(it.id, it.originalWord,
-            it.translatedWord, it.isFavorite) }
+        return dao.getFavorites().map {
+            QueryItem(
+                originalWord = it.originalWord,
+                translatedWord = it.translatedWord,
+                isFavorite = it.isFavorite,
+            )
+        }
     }
 
     override suspend fun removeFromItems(item: Item): List<Item> {
-        dao.removeFromFavorites(FavoritesEntity(item.id, item.originalWord,
-            item.translatedWord, item.isFavorite))
+        dao.removeFromFavorites(item.originalWord)
         return getItems()
     }
 
@@ -67,3 +57,4 @@ class FavoritesRepositoryImpl @Inject constructor(
         return getItems()
     }
 }
+

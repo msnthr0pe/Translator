@@ -71,7 +71,9 @@ class HistoryItemsViewModel @Inject constructor(
     fun manageFavorites(item: QueryItem) {
         viewModelScope.launch {
             val toggled = item.toggleFavorite() as QueryItem
+
             _queryItems.value = updateItemUseCase(toggled)
+
             if (toggled.isFavorite) {
                 _favoritesItems.value = addToFavoritesUseCase(toggled)
             } else {
@@ -79,7 +81,6 @@ class HistoryItemsViewModel @Inject constructor(
             }
         }
     }
-
 
     fun loadFavorites() {
         viewModelScope.launch {

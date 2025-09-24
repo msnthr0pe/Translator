@@ -21,15 +21,24 @@ class TranslationViewModel @Inject constructor(
     private val _translationResult = MutableLiveData("")
     val translationResult: LiveData<String> get() = _translationResult
 
+    private val _errorState = MutableLiveData(false)
+    val errorState: LiveData<Boolean> get() = _errorState
 
     fun translate(word: String, onTranslated: (String) -> Unit) {
         viewModelScope.launch {
             if (word.isNotEmpty()) {
-                _translationResult.value = translateUseCase(TranslationRequest(word)).result
+                try {
+                    _translationResult.value = translateUseCase(TranslationRequest(word)).result
 
-                onTranslated(_translationResult.value.toString())
+                    onTranslated(_translationResult.value.toString())
+                } catch (_: Exception) {
+                    _errorState.value = true
+                }
             }
         }
+    }
+    fun resetErrorState() {
+        _errorState.value = false
     }
     fun updateEditTextContents(newContents: String) {
         _editTextContents.value = newContents

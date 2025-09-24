@@ -24,13 +24,16 @@ interface ItemDao {
     suspend fun updateHistoryItem(item: HistoryEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addFavoritesItem(item: FavoritesEntity): Long
+    suspend fun addFavoritesItem(item: FavoritesEntity)
 
-    @Query("SELECT * FROM favorites ORDER BY id DESC")
+    @Query("SELECT * FROM favorites ORDER BY rowid DESC")
     suspend fun getFavorites(): List<FavoritesEntity>
 
-    @Delete
-    suspend fun removeFromFavorites(item: FavoritesEntity)
+    @Query("SELECT EXISTS(SELECT 1 FROM favorites WHERE originalWord = :originalWord LIMIT 1)")
+    suspend fun isFavorite(originalWord: String): Boolean
+
+    @Query("DELETE FROM favorites WHERE originalWord = :originalWord")
+    suspend fun removeFromFavorites(originalWord: String)
 
     @Query("DELETE FROM favorites")
     suspend fun clearFavorites()

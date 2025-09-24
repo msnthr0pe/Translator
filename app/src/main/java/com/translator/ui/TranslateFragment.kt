@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -61,6 +62,13 @@ class TranslateFragment : Fragment() {
     private fun setupInteractions() {
         binding.translationQuery.doOnTextChanged { text, _, _, _ ->
             translationViewModel.updateEditTextContents(text.toString())
+        }
+
+        translationViewModel.errorState.observe(viewLifecycleOwner) {
+            if (it) {
+                Toast.makeText(activity, "Отсутствует интернет", Toast.LENGTH_SHORT).show()
+                translationViewModel.resetErrorState()
+            }
         }
 
         binding.transalteButton.setOnClickListener {
