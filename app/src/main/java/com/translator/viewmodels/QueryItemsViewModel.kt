@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HistoryItemsViewModel @Inject constructor(
+class QueryItemsViewModel @Inject constructor(
     private val addToHistoryUseCase: AddToItemsUseCase,
     private val updateItemUseCase: UpdateItemUseCase,
     private val checkIfItemFavoriteUseCase: CheckIfItemFavoriteUseCase,
@@ -46,9 +46,16 @@ class HistoryItemsViewModel @Inject constructor(
             if (checkIfItemFavoriteUseCase(newItem)) {
                 newItem = newItem.toggleFavorite() as QueryItem
             }
-            _historyItems.value = addToHistoryUseCase(
-                newItem
-            )
+            Log.d("TranslatorApp", checkIfFavorite(newItem).toString())
+            if (checkIfFavorite(newItem)) {
+                _historyItems.value = addToHistoryUseCase(
+                    newItem.setFavorite(true)
+                )
+            } else {
+                _historyItems.value = addToHistoryUseCase(
+                    newItem
+                )
+            }
         }
     }
 
@@ -75,15 +82,26 @@ class HistoryItemsViewModel @Inject constructor(
         viewModelScope.launch {
             val toggled = item.toggleFavorite() as QueryItem
 
-            Log.d("TranslatorApp", " ${historyItems.value.toString()}")
             _historyItems.value = updateItemUseCase(toggled)
-            Log.d("TranslatorApp", " ${historyItems.value.toString()}")
             if (toggled.isFavorite) {
                 _favoritesItems.value = addToFavoritesUseCase(toggled)
             } else {
                 _favoritesItems.value = removeFromFavoritesUseCase(toggled)
             }
 
+        }
+    }
+
+    private suspend fun checkIfFavorite(queryItem: QueryItem): Boolean {
+        val favorites = getFavoriteUseCase()
+        return favorites.any { it.originalWord == queryItem.originalWord }
+    }
+
+    fun uncheckFavorites() {
+        viewModelScope.launch {
+            _favoritesItems.value?.forEach {
+                _historyItems.value = updateItemUseCase(it.toggleFavorite())
+            }
         }
     }
 

@@ -7,4 +7,5 @@ data class QueryItem(
     override val isFavorite: Boolean = false,
 ) : Item {
     override fun toggleFavorite(): Item = copy(isFavorite = !isFavorite)
+    override fun setFavorite(isFavorite: Boolean): Item = copy(isFavorite = isFavorite)
 }

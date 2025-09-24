@@ -7,4 +7,5 @@ interface Item {
     val isFavorite: Boolean
 
     fun toggleFavorite(): Item
+    fun setFavorite(isFavorite: Boolean): Item
 }

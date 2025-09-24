@@ -1,6 +1,6 @@
 package com.translator.ui
 
-import com.translator.viewmodels.HistoryItemsViewModel
+import com.translator.viewmodels.QueryItemsViewModel
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -21,7 +21,7 @@ class TranslateFragment : Fragment() {
     private var _binding: FragmentTranslateBinding? = null
     private val binding get() = _binding!!
     private val translationViewModel: TranslationViewModel by activityViewModels()
-    private val historyItemsViewModel: HistoryItemsViewModel by activityViewModels()
+    private val queryItemsViewModel: QueryItemsViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,7 +40,7 @@ class TranslateFragment : Fragment() {
     }
 
     private fun loadHistory() {
-        historyItemsViewModel.loadHistory()
+        queryItemsViewModel.loadHistory()
     }
 
     private fun setupObservers() {
@@ -72,27 +72,28 @@ class TranslateFragment : Fragment() {
 
         binding.transalteButton.setOnClickListener {
             translationViewModel.translate(translationViewModel.editTextContents.value.toString()) {
-                historyItemsViewModel.addToHistory(
+                queryItemsViewModel.addToHistory(
                     translationViewModel.editTextContents.value.orEmpty(),
                     it
                 )
             }
+
         }
     }
 
     private fun setupHistoryRecycler() {
         val adapter = HistoryAdapter ({ historyItem ->
-            historyItemsViewModel.removeHistoryItem(historyItem)
+            queryItemsViewModel.removeHistoryItem(historyItem)
         },
             { historyItem ->
-                historyItemsViewModel.onChangeFavorites(historyItem)
+                queryItemsViewModel.onChangeFavorites(historyItem)
             })
         with (binding) {
             historyRecycler.layoutManager = LinearLayoutManager(activity)
             historyRecycler.adapter = adapter
         }
 
-        historyItemsViewModel.historyItems.observe(viewLifecycleOwner) { list ->
+        queryItemsViewModel.historyItems.observe(viewLifecycleOwner) { list ->
             adapter.submitList(list.map {
                 QueryItem(
                     it.id,
@@ -108,7 +109,7 @@ class TranslateFragment : Fragment() {
             }
         }
         binding.clearHistoryButton.setOnClickListener {
-            historyItemsViewModel.clearHistory()
+            queryItemsViewModel.clearHistory()
             }
     }
 

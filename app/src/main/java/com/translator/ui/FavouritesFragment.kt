@@ -10,13 +10,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.translator.databinding.FragmentFavouritesBinding
 import com.translator.domain.models.QueryItem
 import com.translator.ui.recycler.FavoritesAdapter
-import com.translator.viewmodels.HistoryItemsViewModel
+import com.translator.viewmodels.QueryItemsViewModel
 
 
 class FavouritesFragment : Fragment() {
     private var _binding: FragmentFavouritesBinding? = null
     private val binding get() = _binding!!
-    private val historyItemsViewModel: HistoryItemsViewModel by activityViewModels()
+    private val queryItemsViewModel: QueryItemsViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,20 +33,18 @@ class FavouritesFragment : Fragment() {
     }
 
     private fun loadFavorites() {
-        historyItemsViewModel.loadFavorites()
+        queryItemsViewModel.loadFavorites()
     }
 
     private fun setupFavoritesRecycler() {
-        val adapter = FavoritesAdapter(
-            { favoriteItem ->
-                historyItemsViewModel.onChangeFavorites(favoriteItem)
-            }
-        )
+        val adapter = FavoritesAdapter { favoriteItem ->
+            queryItemsViewModel.onChangeFavorites(favoriteItem)
+        }
 
         binding.favoritesRecycler.layoutManager = LinearLayoutManager(requireContext())
         binding.favoritesRecycler.adapter = adapter
 
-        historyItemsViewModel.favoritesItems.observe(viewLifecycleOwner) { list ->
+        queryItemsViewModel.favoritesItems.observe(viewLifecycleOwner) { list ->
             adapter.submitList(list.map {
                 QueryItem(
                     it.id,
@@ -62,7 +60,8 @@ class FavouritesFragment : Fragment() {
             }
         }
         binding.clearFavoritesButton.setOnClickListener {
-            historyItemsViewModel.clearFavorites()
+            queryItemsViewModel.uncheckFavorites()
+            queryItemsViewModel.clearFavorites()
         }
     }
 
