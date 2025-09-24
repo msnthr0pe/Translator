@@ -25,7 +25,7 @@
             android:id="@+id/favorites_placeholder"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="visible"
+            android:visibility="gone"
             android:layout_marginTop="@dimen/small_margin"
             app:cardCornerRadius="@dimen/default_corner_radius"
             app:cardElevation="0dp"
@@ -43,7 +43,7 @@
             android:id="@+id/recycler_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"
+            android:visibility="visible"
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView

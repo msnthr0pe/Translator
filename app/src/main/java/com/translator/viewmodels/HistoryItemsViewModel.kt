@@ -6,6 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.translator.domain.models.QueryItem
 import com.translator.domain.models.Item
+import com.translator.domain.usecases.translationitems.favorites.AddToFavoritesUseCase
+import com.translator.domain.usecases.translationitems.favorites.GetFavoritesUseCase
+import com.translator.domain.usecases.translationitems.favorites.RemoveFromFavoritesUseCase
 import com.translator.domain.usecases.translationitems.history.AddToItemsUseCase
 import com.translator.domain.usecases.translationitems.history.CheckIfItemFavoriteUseCase
 import com.translator.domain.usecases.translationitems.history.ClearItemsUseCase
@@ -24,7 +27,10 @@ class HistoryItemsViewModel @Inject constructor(
     private val clearHistoryUseCase: ClearItemsUseCase,
     private val removeFromHistoryUseCase: RemoveFromItemsUseCase,
     private val getHistoryUseCase: GetItemsUseCase,
-): ViewModel() {
+    private val addToFavoritesUseCase: AddToFavoritesUseCase,
+    private val removeFromFavoritesUseCase: RemoveFromFavoritesUseCase,
+    private val getFavoriteUseCase: GetFavoritesUseCase,
+    ): ViewModel() {
 
     private val _queryItems = MutableLiveData<List<Item>>(emptyList<QueryItem>())
     val historyItems: LiveData<List<Item>> get() = _queryItems
@@ -66,15 +72,20 @@ class HistoryItemsViewModel @Inject constructor(
         viewModelScope.launch {
             val toggled = item.toggleFavorite() as QueryItem
             _queryItems.value = updateItemUseCase(toggled)
+            if (toggled.isFavorite) {
+                _favoritesItems.value = addToFavoritesUseCase(toggled)
+            } else {
+                _favoritesItems.value = removeFromFavoritesUseCase(toggled)
+            }
         }
     }
 
 
-//    fun loadFavorites() {
-//        viewModelScope.launch {
-//            _favoritesItems.value = getFavoritesUseCase()
-//        }
-//    }
+    fun loadFavorites() {
+        viewModelScope.launch {
+            _favoritesItems.value = getFavoriteUseCase()
+        }
+    }
 //
 //    fun clearFavorites() {
 //        viewModelScope.launch {
