@@ -103,7 +103,7 @@ class TranslateFragment : Fragment() {
         }
         binding.clearHistoryButton.setOnClickListener {
             historyItemsViewModel.clearHistory()
-        }
+            }
     }
 
     private fun setHistoryVisibility(setVisible: Boolean) {

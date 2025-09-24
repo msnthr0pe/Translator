@@ -1,6 +1,6 @@
 package com.translator.di
 
-import com.translator.domain.repository.TranslatedItemsRepository
+import com.translator.domain.repository.TranslatedHistoryRepository
 import com.translator.domain.repository.TranslationRepository
 import com.translator.domain.usecases.translationitems.AddToItemsUseCase
 import com.translator.domain.usecases.translationitems.ClearItemsUseCase
@@ -28,37 +28,37 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideAddToItemsUseCase(
-        repository: TranslatedItemsRepository
+        repository: TranslatedHistoryRepository
         ): AddToItemsUseCase = AddToItemsUseCase(repository)
 
     @Provides
     @Singleton
     fun provideClearItemsUseCase(
-        repository: TranslatedItemsRepository
+        repository: TranslatedHistoryRepository
     ): ClearItemsUseCase = ClearItemsUseCase(repository)
 
     @Provides
     @Singleton
     fun provideRemoveFromItemsUseCase(
-        repository: TranslatedItemsRepository
+        repository: TranslatedHistoryRepository
     ): RemoveFromItemsUseCase = RemoveFromItemsUseCase(repository)
 
     @Provides
     @Singleton
     fun provideGetHistoryUseCase(
-        repository: TranslatedItemsRepository
+        repository: TranslatedHistoryRepository
     ): GetItemsUseCase = GetItemsUseCase(repository)
 
     @Provides
     @Singleton
     fun provideUpdateItemsUseCase(
-        repository: TranslatedItemsRepository
+        repository: TranslatedHistoryRepository
     ): UpdateItemsUseCase = UpdateItemsUseCase(repository)
 
     @Provides
     @Singleton
     fun provideCheckIfItemFavoriteUseCase(
-        repository: TranslatedItemsRepository
+        repository: TranslatedHistoryRepository
     ): CheckIfItemFavoriteUseCase = CheckIfItemFavoriteUseCase(repository)
 
 }

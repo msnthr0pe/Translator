@@ -1,15 +1,16 @@
 package com.translator.data.repository
 
+import com.translator.data.local.FavoritesEntity
 import com.translator.data.local.ItemDao
 import com.translator.data.local.HistoryEntity
 import com.translator.domain.models.HistoryItem
 import com.translator.domain.models.Item
-import com.translator.domain.repository.TranslatedItemsRepository
+import com.translator.domain.repository.TranslatedHistoryRepository
 import javax.inject.Inject
 
 class HistoryRepositoryImpl @Inject constructor(
     private val dao: ItemDao
-) : TranslatedItemsRepository {
+) : TranslatedHistoryRepository {
 
     override suspend fun addItem(item: Item): List<Item> {
         dao.addHistoryItem(
@@ -32,6 +33,19 @@ class HistoryRepositoryImpl @Inject constructor(
         val returnedItem = dao.getItem(item.originalWord)
         if (returnedItem == null) {
             return false
+        }
+        if (returnedItem.isFavorite) {
+            dao.addFavoritesItem(FavoritesEntity(
+                originalWord = item.originalWord,
+                translatedWord = item.translatedWord,
+                isFavorite = true,
+            ))
+        } else {
+            dao.removeFromFavorites(FavoritesEntity(
+                originalWord = item.originalWord,
+                translatedWord = item.translatedWord,
+                isFavorite = false,
+            ))
         }
         return returnedItem.isFavorite
     }

@@ -23,4 +23,14 @@ interface ItemDao {
     @Update
     suspend fun updateAll(items: List<HistoryEntity>)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun addFavoritesItem(item: FavoritesEntity): Long
+
+    @Delete
+    suspend fun removeFromFavorites(item: FavoritesEntity)
+
+    @Query("DELETE FROM favorites")
+    suspend fun clearFavorites()
+
+
 }

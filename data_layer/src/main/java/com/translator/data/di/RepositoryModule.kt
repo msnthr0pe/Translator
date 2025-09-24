@@ -4,7 +4,7 @@ import com.translator.data.repository.HistoryRepositoryImpl
 import com.translator.data.local.ItemDao
 import com.translator.data.remote.SkyengApi
 import com.translator.data.repository.TranslationRepositoryImpl
-import com.translator.domain.repository.TranslatedItemsRepository
+import com.translator.domain.repository.TranslatedHistoryRepository
 import com.translator.domain.repository.TranslationRepository
 import dagger.Module
 import dagger.Provides
@@ -23,7 +23,7 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideHistoryRepository(dao: ItemDao): TranslatedItemsRepository =
+    fun provideHistoryRepository(dao: ItemDao): TranslatedHistoryRepository =
         HistoryRepositoryImpl(dao)
 
 }
