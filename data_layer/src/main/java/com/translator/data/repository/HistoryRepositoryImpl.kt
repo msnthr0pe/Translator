@@ -28,6 +28,14 @@ class HistoryRepositoryImpl @Inject constructor(
         return getItems()
     }
 
+    override suspend fun checkIfFavorite(item: Item): Boolean {
+        val returnedItem = dao.getItem(item.originalWord)
+        if (returnedItem == null) {
+            return false
+        }
+        return returnedItem.isFavorite
+    }
+
     override suspend fun getItems(): List<Item> {
         return dao.getHistory().map { HistoryItem(it.id, it.originalWord,
             it.translatedWord, it.isFavorite) }

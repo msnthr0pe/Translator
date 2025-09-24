@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.translator.domain.models.CompleteTranslation
 import com.translator.domain.models.HistoryItem
 import com.translator.domain.models.Item
 import com.translator.domain.usecases.translationitems.AddToItemsUseCase
+import com.translator.domain.usecases.translationitems.CheckIfItemFavoriteUseCase
 import com.translator.domain.usecases.translationitems.ClearItemsUseCase
 import com.translator.domain.usecases.translationitems.GetItemsUseCase
 import com.translator.domain.usecases.translationitems.RemoveFromItemsUseCase
@@ -20,6 +20,7 @@ import javax.inject.Inject
 class HistoryItemsViewModel @Inject constructor(
     private val addToHistoryUseCase: AddToItemsUseCase,
     private val updateItemsUseCase: UpdateItemsUseCase,
+    private val checkIfItemFavoriteUseCase: CheckIfItemFavoriteUseCase,
     private val clearHistoryUseCase: ClearItemsUseCase,
     private val removeFromHistoryUseCase: RemoveFromItemsUseCase,
     private val getHistoryUseCase: GetItemsUseCase,
@@ -31,9 +32,13 @@ class HistoryItemsViewModel @Inject constructor(
     val favoritesItems: LiveData<List<Item>> get() = _favoritesItems
     fun addToHistory(word: String, translation: String) {
         viewModelScope.launch {
+            var newItem = HistoryItem(originalWord = word,
+                translatedWord = translation)
+            if (checkIfItemFavoriteUseCase(newItem)) {
+                newItem = newItem.toggleFavorite() as HistoryItem
+            }
             _historyItems.value = addToHistoryUseCase(
-                CompleteTranslation(word,
-                    translation)
+                newItem
             )
         }
     }

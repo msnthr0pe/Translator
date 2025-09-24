@@ -7,6 +7,7 @@ import com.translator.domain.usecases.translationitems.ClearItemsUseCase
 import com.translator.domain.usecases.translationitems.GetItemsUseCase
 import com.translator.domain.usecases.translationitems.RemoveFromItemsUseCase
 import com.translator.domain.usecases.translation.TranslateUseCase
+import com.translator.domain.usecases.translationitems.CheckIfItemFavoriteUseCase
 import com.translator.domain.usecases.translationitems.UpdateItemsUseCase
 import dagger.Module
 import dagger.Provides
@@ -53,5 +54,11 @@ object UseCaseModule {
     fun provideUpdateItemsUseCase(
         repository: TranslatedItemsRepository
     ): UpdateItemsUseCase = UpdateItemsUseCase(repository)
+
+    @Provides
+    @Singleton
+    fun provideCheckIfItemFavoriteUseCase(
+        repository: TranslatedItemsRepository
+    ): CheckIfItemFavoriteUseCase = CheckIfItemFavoriteUseCase(repository)
 
 }
