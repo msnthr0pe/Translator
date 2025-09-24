@@ -55,6 +55,27 @@ class FavouritesFragment : Fragment() {
                     it.isFavorite
                 )
             })
+            if (list.isEmpty()) {
+                setFavoritesVisibility(false)
+            } else {
+                setFavoritesVisibility(true)
+            }
+        }
+        binding.clearFavoritesButton.setOnClickListener {
+            historyItemsViewModel.clearFavorites()
+        }
+    }
+
+    private fun setFavoritesVisibility(setVisible: Boolean) {
+        with(binding) {
+            if (setVisible){
+                recyclerLayout.visibility = View.VISIBLE
+                favoritesPlaceholder.visibility = View.GONE
+            } else {
+                recyclerLayout.visibility = View.GONE
+                favoritesPlaceholder.visibility = View.VISIBLE
+            }
+
         }
     }
 }

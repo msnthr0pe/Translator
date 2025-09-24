@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.translator.domain.models.QueryItem
 import com.translator.domain.models.Item
 import com.translator.domain.usecases.translationitems.favorites.AddToFavoritesUseCase
+import com.translator.domain.usecases.translationitems.favorites.ClearFavoritesUseCase
 import com.translator.domain.usecases.translationitems.favorites.GetFavoritesUseCase
 import com.translator.domain.usecases.translationitems.favorites.RemoveFromFavoritesUseCase
 import com.translator.domain.usecases.translationitems.history.AddToItemsUseCase
@@ -30,6 +31,7 @@ class HistoryItemsViewModel @Inject constructor(
     private val addToFavoritesUseCase: AddToFavoritesUseCase,
     private val removeFromFavoritesUseCase: RemoveFromFavoritesUseCase,
     private val getFavoriteUseCase: GetFavoritesUseCase,
+    private val clearFavoritesUseCase: ClearFavoritesUseCase,
     ): ViewModel() {
 
     private val _queryItems = MutableLiveData<List<Item>>(emptyList<QueryItem>())
@@ -87,16 +89,10 @@ class HistoryItemsViewModel @Inject constructor(
             _favoritesItems.value = getFavoriteUseCase()
         }
     }
-//
-//    fun clearFavorites() {
-//        viewModelScope.launch {
-//            _favoritesItems.value = clearFavoritesUseCase()
-//        }
-//    }
-//
-//    fun removeFavoritesItem(historyItem: HistoryItem) {
-//        viewModelScope.launch {
-//            _favoritesItems.value = removeFromFavoritesUseCase(historyItem)
-//        }
-//    }
+
+    fun clearFavorites() {
+        viewModelScope.launch {
+            _favoritesItems.value = clearFavoritesUseCase()
+        }
+    }
 }

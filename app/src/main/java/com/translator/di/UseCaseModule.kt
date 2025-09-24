@@ -9,6 +9,7 @@ import com.translator.domain.usecases.translationitems.history.GetItemsUseCase
 import com.translator.domain.usecases.translationitems.history.RemoveFromItemsUseCase
 import com.translator.domain.usecases.translation.TranslateUseCase
 import com.translator.domain.usecases.translationitems.favorites.AddToFavoritesUseCase
+import com.translator.domain.usecases.translationitems.favorites.ClearFavoritesUseCase
 import com.translator.domain.usecases.translationitems.favorites.GetFavoritesUseCase
 import com.translator.domain.usecases.translationitems.favorites.RemoveFromFavoritesUseCase
 import com.translator.domain.usecases.translationitems.history.CheckIfItemFavoriteUseCase
@@ -82,5 +83,12 @@ object UseCaseModule {
     fun provideGetFavoritesUseCase(
         repository: FavoritesRepository
     ): GetFavoritesUseCase = GetFavoritesUseCase(repository)
+
+    @Provides
+    @Singleton
+    fun provideClearFavoritesUseCase(
+        repository: FavoritesRepository
+    ): ClearFavoritesUseCase = ClearFavoritesUseCase(repository)
+
 
 }
