@@ -78,7 +78,6 @@ class TranslateFragment : Fragment() {
                     translationViewModel.editTextContents.value.orEmpty(),
                     it
                 )
-                binding.translationQuery.text.clear()
                 hideKeyboard()
             }
         }

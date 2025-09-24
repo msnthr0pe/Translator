@@ -33,8 +33,11 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideAddToItemsUseCase(
-        repository: HistoryRepository
-        ): AddToItemsUseCase = AddToItemsUseCase(repository)
+        repository: HistoryRepository,
+        getFavoriteUseCase: GetFavoritesUseCase
+        ): AddToItemsUseCase = AddToItemsUseCase(
+        repository,
+            getFavoriteUseCase)
 
     @Provides
     @Singleton

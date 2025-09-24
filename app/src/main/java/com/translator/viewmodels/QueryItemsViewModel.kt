@@ -11,7 +11,6 @@ import com.translator.domain.usecases.translationitems.favorites.ClearFavoritesU
 import com.translator.domain.usecases.translationitems.favorites.GetFavoritesUseCase
 import com.translator.domain.usecases.translationitems.favorites.RemoveFromFavoritesUseCase
 import com.translator.domain.usecases.translationitems.history.AddToItemsUseCase
-import com.translator.domain.usecases.translationitems.history.CheckIfItemFavoriteUseCase
 import com.translator.domain.usecases.translationitems.history.ClearItemsUseCase
 import com.translator.domain.usecases.translationitems.history.GetItemsUseCase
 import com.translator.domain.usecases.translationitems.history.RemoveFromItemsUseCase
@@ -24,7 +23,6 @@ import javax.inject.Inject
 class QueryItemsViewModel @Inject constructor(
     private val addToHistoryUseCase: AddToItemsUseCase,
     private val updateItemUseCase: UpdateItemUseCase,
-    private val checkIfItemFavoriteUseCase: CheckIfItemFavoriteUseCase,
     private val clearHistoryUseCase: ClearItemsUseCase,
     private val removeFromHistoryUseCase: RemoveFromItemsUseCase,
     private val getHistoryUseCase: GetItemsUseCase,
@@ -40,20 +38,11 @@ class QueryItemsViewModel @Inject constructor(
     val favoritesItems: LiveData<List<Item>> get() = _favoritesItems
     fun addToHistory(word: String, translation: String) {
         viewModelScope.launch {
-            var newItem = QueryItem(originalWord = word,
-                translatedWord = translation)
-            if (checkIfItemFavoriteUseCase(newItem)) {
-                newItem = newItem.toggleFavorite() as QueryItem
-            }
-            if (checkIfFavorite(newItem)) {
-                _historyItems.value = addToHistoryUseCase(
-                    newItem.setFavorite(true)
-                )
-            } else {
-                _historyItems.value = addToHistoryUseCase(
-                    newItem
-                )
-            }
+            _historyItems.value = addToHistoryUseCase(
+                QueryItem(
+                    originalWord = word,
+                    translatedWord = translation)
+            )
         }
     }
 
@@ -87,11 +76,6 @@ class QueryItemsViewModel @Inject constructor(
             }
 
         }
-    }
-
-    private suspend fun checkIfFavorite(queryItem: QueryItem): Boolean {
-        val favorites = getFavoriteUseCase()
-        return favorites.any { it.originalWord == queryItem.originalWord }
     }
 
     fun uncheckAndClearFavorites() {
